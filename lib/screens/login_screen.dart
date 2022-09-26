@@ -121,8 +121,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       Text(
                         Constants.version,
-                        style:
-                            const TextStyle(fontSize: 20, color: Colors.blue),
+                        style: const TextStyle(
+                            fontSize: 20, color: Color(0xff004f95)),
                       ),
                     ],
                   ),
@@ -198,20 +198,29 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget _showEmail() {
     return Container(
       padding: const EdgeInsets.all(10),
-      child: TextField(
-        keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
-            fillColor: Colors.white,
-            filled: true,
-            hintText: 'Usuario...',
-            labelText: 'Usuario',
-            errorText: _emailShowError ? _emailError : null,
-            prefixIcon: const Icon(Icons.person),
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
-        onChanged: (value) {
-          _email = value;
-        },
+      child: Theme(
+        data: Theme.of(context).copyWith(
+          primaryColor: Color.fromARGB(255, 24, 207, 36),
+        ),
+        child: TextField(
+          keyboardType: TextInputType.emailAddress,
+          decoration: InputDecoration(
+              fillColor: Colors.white,
+              filled: true,
+              focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: const BorderSide(
+                      width: 1, color: Color.fromARGB(255, 24, 207, 36))),
+              hintText: 'Usuario...',
+              labelText: 'Usuario',
+              errorText: _emailShowError ? _emailError : null,
+              prefixIcon: const Icon(Icons.person),
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+          onChanged: (value) {
+            _email = value;
+          },
+        ),
       ),
     );
   }
@@ -228,6 +237,10 @@ class _LoginScreenState extends State<LoginScreen> {
         decoration: InputDecoration(
             fillColor: Colors.white,
             filled: true,
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+                borderSide: const BorderSide(
+                    width: 1, color: const Color.fromARGB(255, 24, 207, 36))),
             hintText: 'Contraseña...',
             labelText: 'Contraseña',
             errorText: _passwordShowError ? _passwordError : null,
@@ -259,6 +272,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return CheckboxListTile(
       title: const Text('Recordarme:'),
       value: _rememberme,
+      activeColor: Color.fromARGB(255, 24, 207, 36),
       onChanged: (value) {
         setState(() {
           _rememberme = value!;
@@ -290,7 +304,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ],
               ),
               style: ElevatedButton.styleFrom(
-                primary: Color.fromARGB(255, 24, 207, 36),
+                primary: const Color.fromARGB(255, 24, 207, 36),
                 minimumSize: const Size(double.infinity, 50),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),

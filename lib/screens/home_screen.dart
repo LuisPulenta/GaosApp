@@ -185,7 +185,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       String? result = await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => LoginScreen(),
+                          builder: (context) => ObrasScreen(
+                            user: widget.user,
+                            opcion: 1,
+                          ),
                         ),
                       );
                     },
@@ -193,6 +196,35 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
+            widget.user.habilitaSSHH == 1
+                ? Row(
+                    children: [
+                      Expanded(
+                        child: ListTile(
+                          leading: const Icon(
+                            Icons.format_list_bulleted,
+                            color: Colors.white,
+                          ),
+                          tileColor: const Color(0xff8c8c94),
+                          title: const Text('Inspecciones S&H',
+                              style:
+                                  TextStyle(fontSize: 15, color: Colors.white)),
+                          onTap: () async {
+                            //guardarLocalizacion();
+                            String? result = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => InspeccionesMenuScreen(
+                                  user: widget.user,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  )
+                : Container(),
             const Divider(
               color: Colors.white,
               height: 1,
