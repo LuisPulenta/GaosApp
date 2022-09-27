@@ -965,7 +965,7 @@ class _InspeccionCuestionarioScreenState
       'grupoc': widget.esContratista == true ? 'PPR' : widget.causante.grupo,
       'causantec':
           widget.esContratista == true ? '000000' : widget.causante.codigo,
-      'dni': widget.causante.nroSAP,
+      'dni': widget.causante.cuit,
       'estado': '0',
       'observacionesinspeccion': widget.observaciones,
       'aviso': 'NO',

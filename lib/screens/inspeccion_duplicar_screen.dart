@@ -92,26 +92,34 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
     super.initState();
     _causante = Causante(
         nroCausante: 0,
+        grupo: '',
         codigo: '',
         nombre: '',
-        encargado: '',
-        telefono: '',
-        grupo: '',
-        nroSAP: '',
+        apellido: '',
         estado: false,
-        razonSocial: '',
-        linkFoto: '',
-        imageFullPath: '',
-        image: null,
         direccion: '',
         numero: 0,
-        telefonoContacto1: '',
-        telefonoContacto2: '',
-        telefonoContacto3: '',
-        fecha: '',
-        notasCausantes: '',
+        piso: '',
+        dpto: '',
+        torre: '',
         ciudad: '',
-        provincia: '');
+        telefono: '',
+        caracTelefono: '',
+        codpos: '',
+        encargado: '',
+        email: '',
+        fecha: '',
+        tipoprov: 0,
+        cuit: '',
+        razonSocial: '',
+        nivel: 0,
+        barrio: '',
+        fax: '',
+        caracFax: '',
+        provincia: '',
+        notasCausantes: '',
+        notas: '',
+        idEmpresa: 0);
     _getPosition();
     _getInspeccion();
   }
@@ -532,7 +540,7 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
       return;
     }
 
-    Response response = await ApiHelper.getCausante(_codigo);
+    Response response = await ApiHelper.getCausante(_codigo, 1);
 
     if (!response.isSuccess) {
       await showAlertDialog(
@@ -654,7 +662,7 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
             CustomRow(
               icon: Icons.assignment_ind,
               nombredato: 'Documento:',
-              dato: _causante.nroSAP,
+              dato: _causante.cuit,
             ),
           ],
         ),

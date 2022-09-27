@@ -19,6 +19,7 @@ class User {
   int? fechaCaduca = 0;
   int? intentosInvDiario = 0;
   int? opeAutorizo = 0;
+  int idEmpresa = 0;
 
   User(
       {required this.idUsuario,
@@ -40,7 +41,8 @@ class User {
       required this.fullName,
       required this.fechaCaduca,
       required this.intentosInvDiario,
-      required this.opeAutorizo});
+      required this.opeAutorizo,
+      required this.idEmpresa});
 
   User.fromJson(Map<String, dynamic> json) {
     idUsuario = json['idUsuario'];
@@ -63,6 +65,7 @@ class User {
     fechaCaduca = json['fechaCaduca'];
     intentosInvDiario = json['intentosInvDiario'];
     opeAutorizo = json['opeAutorizo'];
+    idEmpresa = json['idEmpresa'];
   }
 
   Map<String, dynamic> toJson() {
@@ -87,6 +90,7 @@ class User {
     data['fechaCaduca'] = fechaCaduca;
     data['intentosInvDiario'] = intentosInvDiario;
     data['opeAutorizo'] = opeAutorizo;
+    data['idEmpresa'] = idEmpresa;
 
     return data;
   }

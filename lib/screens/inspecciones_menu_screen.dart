@@ -32,7 +32,7 @@ class _InspeccionesMenuScreenState extends State<InspeccionesMenuScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF484848),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Menú Inspecciones'),
         centerTitle: true,
@@ -55,7 +55,7 @@ class _InspeccionesMenuScreenState extends State<InspeccionesMenuScreen> {
               ],
             ),
             style: ElevatedButton.styleFrom(
-              primary: const Color(0xFF120E43),
+              primary: const Color.fromARGB(255, 24, 207, 36),
               minimumSize: const Size(100, 50),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5),
@@ -87,7 +87,7 @@ class _InspeccionesMenuScreenState extends State<InspeccionesMenuScreen> {
               ],
             ),
             style: ElevatedButton.styleFrom(
-              primary: const Color(0xFF120E43),
+              primary: const Color.fromARGB(255, 24, 207, 36),
               minimumSize: const Size(100, 50),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5),

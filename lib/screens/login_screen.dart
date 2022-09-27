@@ -31,11 +31,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool _isRunning = false;
 
-  String _email = '';
-  String _password = '';
+  // String _email = '';
+  // String _password = '';
+  String _email = 'LNUNEZ';
+  String _password = 'LNUNEZ';
 
   String _emailError = '';
   bool _emailShowError = false;
+  late Empresa _empresa;
 
   String _passwordError = '';
   bool _passwordShowError = false;
@@ -72,6 +75,13 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
     _isRunning = false;
+    _empresa = Empresa(
+        idEmpresa: 0,
+        nombreempresa: '',
+        direccion: '',
+        telefono: '',
+        carpetaImagenes: '',
+        mensageSSHH: '');
     initPlatformState();
     _getPosition();
     setState(() {});
@@ -398,8 +408,13 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
 
+    Response response2 = await ApiHelper.getEmpresa(user.idEmpresa);
+    _empresa = response2.result;
+
+    var body2 = jsonEncode(_empresa.toJson());
+
     if (_rememberme) {
-      _storeUser(body);
+      _storeUser(body, body2);
     }
 
     // Agregar registro a  websesion
@@ -448,6 +463,7 @@ class _LoginScreenState extends State<LoginScreen> {
         MaterialPageRoute(
             builder: (context) => HomeScreen(
                   user: user,
+                  empresa: _empresa,
                   nroConexion: webSesion.nroConexion,
                 )));
   }
@@ -484,10 +500,11 @@ class _LoginScreenState extends State<LoginScreen> {
     return isValid;
   }
 
-  void _storeUser(String body) async {
+  void _storeUser(String body, String body2) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool('isRemembered', true);
     await prefs.setString('userBody', body);
+    await prefs.setString('empresaBody', body2);
     await prefs.setString('date', DateTime.now().toString());
   }
 

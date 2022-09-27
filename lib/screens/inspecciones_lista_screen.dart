@@ -32,7 +32,7 @@ class _InspeccionesListaScreenState extends State<InspeccionesListaScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF484848),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text('Inspecciones'),
         centerTitle: true,
@@ -55,7 +55,7 @@ class _InspeccionesListaScreenState extends State<InspeccionesListaScreen> {
           Icons.add,
           size: 38,
         ),
-        backgroundColor: const Color(0xFF781f1e),
+        backgroundColor: const Color.fromARGB(255, 24, 207, 36),
         onPressed: () => _addInspeccion(),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -468,13 +468,13 @@ class _InspeccionesListaScreenState extends State<InspeccionesListaScreen> {
           const Text("Cantidad de Inspecciones: ",
               style: TextStyle(
                 fontSize: 14,
-                color: Colors.white,
+                color: Colors.black,
                 fontWeight: FontWeight.bold,
               )),
           Text(_inspecciones.length.toString(),
               style: const TextStyle(
                 fontSize: 14,
-                color: Colors.white,
+                color: Colors.black,
                 fontWeight: FontWeight.bold,
               )),
         ],

@@ -12,9 +12,14 @@ import 'package:battery_plus/battery_plus.dart';
 
 class HomeScreen extends StatefulWidget {
   final User user;
+  final Empresa empresa;
   final int nroConexion;
 
-  const HomeScreen({Key? key, required this.user, required this.nroConexion})
+  const HomeScreen(
+      {Key? key,
+      required this.user,
+      required this.empresa,
+      required this.nroConexion})
       : super(key: key);
 
   @override
@@ -102,6 +107,14 @@ class _HomeScreenState extends State<HomeScreen> {
             SizedBox(height: alto * 0.1),
             Text(
               'Bienvenido/a ${widget.user.fullName}',
+              style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xff004f95)),
+            ),
+            SizedBox(height: alto * 0.1),
+            Text(
+              'Empresa: ${widget.empresa.nombreempresa}',
               style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,

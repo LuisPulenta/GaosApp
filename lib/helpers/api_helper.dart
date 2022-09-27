@@ -138,9 +138,9 @@ class ApiHelper {
   }
 
 //---------------------------------------------------------------------------
-  static Future<Response> getCausante(String codigo) async {
+  static Future<Response> getCausante(String codigo, int idempresa) async {
     var url = Uri.parse(
-        '${Constants.apiUrl}/api/Causantes/GetCausanteByCodigo2/$codigo');
+        '${Constants.apiUrl}/api/Causantes/GetCausanteByCodigo/$codigo/$idempresa');
     var response = await http.get(
       url,
       headers: {
@@ -156,6 +156,27 @@ class ApiHelper {
 
     var decodedJson = jsonDecode(body);
     return Response(isSuccess: true, result: Causante.fromJson(decodedJson));
+  }
+
+//---------------------------------------------------------------------------
+  static Future<Response> getEmpresa(int idempresa) async {
+    var url = Uri.parse(
+        '${Constants.apiUrl}/api/Empresas/GetEmpresaByIdEmpresa/$idempresa');
+    var response = await http.get(
+      url,
+      headers: {
+        'content-type': 'application/json',
+        'accept': 'application/json',
+      },
+    );
+    var body = response.body;
+
+    if (response.statusCode >= 400) {
+      return Response(isSuccess: false, message: body);
+    }
+
+    var decodedJson = jsonDecode(body);
+    return Response(isSuccess: true, result: Empresa.fromJson(decodedJson));
   }
 
 //---------------------------------------------------------------------------

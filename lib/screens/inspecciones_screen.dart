@@ -101,26 +101,34 @@ class _InspeccionesScreenState extends State<InspeccionesScreen> {
     super.initState();
     _causante = Causante(
         nroCausante: 0,
+        grupo: '',
         codigo: '',
         nombre: '',
-        encargado: '',
-        telefono: '',
-        grupo: '',
-        nroSAP: '',
+        apellido: '',
         estado: false,
-        razonSocial: '',
-        linkFoto: '',
-        imageFullPath: '',
-        image: null,
         direccion: '',
         numero: 0,
-        telefonoContacto1: '',
-        telefonoContacto2: '',
-        telefonoContacto3: '',
-        fecha: '',
-        notasCausantes: '',
+        piso: '',
+        dpto: '',
+        torre: '',
         ciudad: '',
-        provincia: '');
+        telefono: '',
+        caracTelefono: '',
+        codpos: '',
+        encargado: '',
+        email: '',
+        fecha: '',
+        tipoprov: 0,
+        cuit: '',
+        razonSocial: '',
+        nivel: 0,
+        barrio: '',
+        fax: '',
+        caracFax: '',
+        provincia: '',
+        notasCausantes: '',
+        notas: '',
+        idEmpresa: 0);
     _getPosition();
     _loadData();
   }
@@ -132,7 +140,7 @@ class _InspeccionesScreenState extends State<InspeccionesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 195, 191, 191),
+      backgroundColor: Color.fromARGB(255, 225, 221, 221),
       appBar: AppBar(
         title: const Text('Nueva Inspección'),
         centerTitle: true,
@@ -200,10 +208,10 @@ class _InspeccionesScreenState extends State<InspeccionesScreen> {
       child: TextField(
         keyboardType: TextInputType.emailAddress,
         decoration: InputDecoration(
-          iconColor: const Color(0xFF781f1e),
-          prefixIconColor: const Color(0xFF781f1e),
-          hoverColor: const Color(0xFF781f1e),
-          focusColor: const Color(0xFF781f1e),
+          iconColor: const Color.fromARGB(255, 24, 207, 36),
+          prefixIconColor: const Color.fromARGB(255, 24, 207, 36),
+          hoverColor: const Color.fromARGB(255, 24, 207, 36),
+          focusColor: const Color.fromARGB(255, 24, 207, 36),
           fillColor: Colors.white,
           filled: true,
           hintText: 'Ingrese Legajo o Documento del empleado...',
@@ -211,7 +219,8 @@ class _InspeccionesScreenState extends State<InspeccionesScreen> {
           errorText: _codigoShowError ? _codigoError : null,
           prefixIcon: const Icon(Icons.badge),
           border: OutlineInputBorder(
-            borderSide: const BorderSide(color: Color(0xFF781f1e)),
+            borderSide:
+                const BorderSide(color: Color.fromARGB(255, 24, 207, 36)),
             borderRadius: BorderRadius.circular(10),
           ),
         ),
@@ -244,7 +253,7 @@ class _InspeccionesScreenState extends State<InspeccionesScreen> {
                 ],
               ),
               style: ElevatedButton.styleFrom(
-                primary: const Color(0xFF781f1e),
+                primary: const Color.fromARGB(255, 24, 207, 36),
                 minimumSize: const Size(double.infinity, 50),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
@@ -281,7 +290,7 @@ class _InspeccionesScreenState extends State<InspeccionesScreen> {
                 ],
               ),
               style: ElevatedButton.styleFrom(
-                primary: const Color(0xFF781f1e),
+                primary: const Color.fromARGB(255, 24, 207, 36),
                 minimumSize: const Size(double.infinity, 50),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
@@ -335,7 +344,7 @@ class _InspeccionesScreenState extends State<InspeccionesScreen> {
             CustomRow(
               icon: Icons.assignment_ind,
               nombredato: 'Documento:',
-              dato: _causante.nroSAP,
+              dato: _causante.cuit,
             ),
           ],
         ),
@@ -403,7 +412,7 @@ class _InspeccionesScreenState extends State<InspeccionesScreen> {
       return;
     }
 
-    Response response = await ApiHelper.getCausante(_codigo);
+    Response response = await ApiHelper.getCausante(_codigo, 1);
 
     if (!response.isSuccess) {
       await showAlertDialog(
@@ -921,7 +930,7 @@ class _InspeccionesScreenState extends State<InspeccionesScreen> {
             ElevatedButton(
               child: const Icon(Icons.search),
               style: ElevatedButton.styleFrom(
-                primary: const Color(0xFF781f1e),
+                primary: const Color.fromARGB(255, 24, 207, 36),
                 minimumSize: const Size(50, 50),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
