@@ -81,16 +81,32 @@ class _InspeccionesScreenState extends State<InspeccionesScreen> {
   final TextEditingController _dniSRController = TextEditingController();
 
   Obra obra = Obra(
-      nroObra: 0,
-      nombreObra: '',
-      elempep: '',
-      observaciones: '',
-      finalizada: 0,
-      supervisore: '',
-      codigoEstado: '',
-      modulo: '',
-      grupoAlmacen: '',
-      obrasDocumentos: []);
+    nroObra: 0,
+    nombreObra: '',
+    elempep: '',
+    observaciones: '',
+    finalizada: 0,
+    supervisore: '',
+    codigoEstado: '',
+    modulo: '',
+    grupoAlmacen: '',
+    obrasDocumentos: [],
+    idCliente: 0,
+  );
+
+  Obra obraVacia = Obra(
+    nroObra: 0,
+    nombreObra: '',
+    elempep: '',
+    observaciones: '',
+    finalizada: 0,
+    supervisore: '',
+    codigoEstado: '',
+    modulo: '',
+    grupoAlmacen: '',
+    obrasDocumentos: [],
+    idCliente: 0,
+  );
 
 //*****************************************************************************
 //************************** INIT STATE ***************************************
@@ -182,9 +198,9 @@ class _InspeccionesScreenState extends State<InspeccionesScreen> {
                 const SizedBox(
                   height: 10,
                 ),
-                _showObra(),
                 _showObservaciones(),
                 _showClientes(),
+                _cliente != 0 ? _showObra() : Container(),
                 _showTiposTrabajos(),
                 const SizedBox(
                   height: 10,
@@ -324,7 +340,7 @@ class _InspeccionesScreenState extends State<InspeccionesScreen> {
             CustomRow(
               icon: Icons.person,
               nombredato: 'Nombre:',
-              dato: _causante.nombre,
+              dato: _causante.nombre + ' ' + _causante.apellido,
             ),
             CustomRow(
               icon: Icons.engineering,
@@ -412,7 +428,8 @@ class _InspeccionesScreenState extends State<InspeccionesScreen> {
       return;
     }
 
-    Response response = await ApiHelper.getCausante(_codigo, 1);
+    Response response =
+        await ApiHelper.getCausante(_codigo, widget.user.idEmpresa);
 
     if (!response.isSuccess) {
       await showAlertDialog(
@@ -466,7 +483,7 @@ class _InspeccionesScreenState extends State<InspeccionesScreen> {
 
     do {
       Response response = Response(isSuccess: false);
-      response = await ApiHelper.getClientes();
+      response = await ApiHelper.getClientes(widget.user.idEmpresa);
       intentos++;
       if (response.isSuccess) {
         bandera = true;
@@ -511,6 +528,8 @@ class _InspeccionesScreenState extends State<InspeccionesScreen> {
                     onChanged: (value) {
                       _cliente = value as int;
                       _tipoTrabajoSelected = 0;
+                      obra = obraVacia;
+                      setState(() {});
                       _getTiposTrabajos();
                     },
                   ),
@@ -941,9 +960,7 @@ class _InspeccionesScreenState extends State<InspeccionesScreen> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => ObrasScreen(
-                      user: widget.user,
-                      opcion: 2,
-                    ),
+                        user: widget.user, opcion: 2, cliente: _cliente),
                   ),
                 );
                 if (obra2 != null) {

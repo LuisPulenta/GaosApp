@@ -540,7 +540,8 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
       return;
     }
 
-    Response response = await ApiHelper.getCausante(_codigo, 1);
+    Response response =
+        await ApiHelper.getCausante(_codigo, widget.user.idEmpresa);
 
     if (!response.isSuccess) {
       await showAlertDialog(

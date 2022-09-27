@@ -84,9 +84,8 @@ class ApiHelper {
   }
 
 //---------------------------------------------------------------------------
-  static Future<Response> getObras(String proyectomodulo) async {
-    var url =
-        Uri.parse('${Constants.apiUrl}/api/Account/GetObras/$proyectomodulo');
+  static Future<Response> getObras(int idcliente) async {
+    var url = Uri.parse('${Constants.apiUrl}/api/Account/GetObras/$idcliente');
     var response = await http.post(
       url,
       headers: {
@@ -296,8 +295,9 @@ class ApiHelper {
   }
 
 //---------------------------------------------------------------------------
-  static Future<Response> getClientes() async {
-    var url = Uri.parse('${Constants.apiUrl}/api/Inspecciones/GetClientes');
+  static Future<Response> getClientes(int idempresa) async {
+    var url = Uri.parse(
+        '${Constants.apiUrl}/api/Inspecciones/GetClientes/$idempresa');
     var response = await http.get(
       url,
       headers: {

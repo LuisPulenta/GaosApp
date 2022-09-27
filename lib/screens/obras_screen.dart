@@ -10,7 +10,12 @@ import 'package:gaosapp/models/user.dart';
 class ObrasScreen extends StatefulWidget {
   final User user;
   final int opcion;
-  const ObrasScreen({Key? key, required this.user, required this.opcion})
+  final int cliente;
+  const ObrasScreen(
+      {Key? key,
+      required this.user,
+      required this.opcion,
+      required this.cliente})
       : super(key: key);
 
   @override
@@ -27,16 +32,18 @@ class _ObrasScreenState extends State<ObrasScreen> {
   bool _isFiltered = false;
   String _search = '';
   Obra obraSelected = Obra(
-      nroObra: 0,
-      nombreObra: '',
-      elempep: '',
-      observaciones: '',
-      finalizada: 0,
-      supervisore: '',
-      codigoEstado: '',
-      modulo: '',
-      grupoAlmacen: '',
-      obrasDocumentos: []);
+    nroObra: 0,
+    nombreObra: '',
+    elempep: '',
+    observaciones: '',
+    finalizada: 0,
+    supervisore: '',
+    codigoEstado: '',
+    modulo: '',
+    grupoAlmacen: '',
+    obrasDocumentos: [],
+    idCliente: 0,
+  );
 
 //*****************************************************************************
 //************************** INIT STATE ***************************************
@@ -55,7 +62,7 @@ class _ObrasScreenState extends State<ObrasScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF484848),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: widget.user.habilitaSSHH == 0
             ? widget.user.modulo == 'ObrasTasa'
@@ -192,7 +199,7 @@ class _ObrasScreenState extends State<ObrasScreen> {
           const Text("Cantidad de Obras: ",
               style: TextStyle(
                 fontSize: 14,
-                color: Colors.white,
+                color: Colors.black,
                 fontWeight: FontWeight.bold,
               )),
           Text(_obras.length.toString(),
@@ -234,7 +241,7 @@ class _ObrasScreenState extends State<ObrasScreen> {
       child: ListView(
         children: _obras.map((e) {
           return Card(
-            color: const Color(0xFFC7C7C8),
+            color: Color.fromARGB(255, 221, 221, 239),
             shadowColor: Colors.white,
             elevation: 10,
             margin: const EdgeInsets.fromLTRB(10, 0, 10, 10),
@@ -262,7 +269,7 @@ class _ObrasScreenState extends State<ObrasScreen> {
                                       const Text("N° Obra: ",
                                           style: TextStyle(
                                             fontSize: 12,
-                                            color: Color(0xFF781f1e),
+                                            color: Color(0xff004f95),
                                             fontWeight: FontWeight.bold,
                                           )),
                                       Expanded(
@@ -275,7 +282,7 @@ class _ObrasScreenState extends State<ObrasScreen> {
                                       const Text("Módulo: ",
                                           style: TextStyle(
                                             fontSize: 12,
-                                            color: Color(0xFF781f1e),
+                                            color: Color(0xff004f95),
                                             fontWeight: FontWeight.bold,
                                           )),
                                       Expanded(
@@ -295,7 +302,7 @@ class _ObrasScreenState extends State<ObrasScreen> {
                                       const Text("Nombre: ",
                                           style: TextStyle(
                                             fontSize: 12,
-                                            color: Color(0xFF781f1e),
+                                            color: Color(0xff004f95),
                                             fontWeight: FontWeight.bold,
                                           )),
                                       Expanded(
@@ -314,7 +321,7 @@ class _ObrasScreenState extends State<ObrasScreen> {
                                       const Text("OP/N° Fuga: ",
                                           style: TextStyle(
                                             fontSize: 12,
-                                            color: Color(0xFF781f1e),
+                                            color: Color(0xff004f95),
                                             fontWeight: FontWeight.bold,
                                           )),
                                       Expanded(
@@ -329,7 +336,7 @@ class _ObrasScreenState extends State<ObrasScreen> {
                                       const Text("Fotos y Doc: ",
                                           style: TextStyle(
                                             fontSize: 12,
-                                            color: Color(0xFF781f1e),
+                                            color: Color(0xff004f95),
                                             fontWeight: FontWeight.bold,
                                           )),
                                       Text(e.obrasDocumentos.length.toString(),
@@ -390,7 +397,7 @@ class _ObrasScreenState extends State<ObrasScreen> {
     //   response = await ApiHelper.getObras(widget.user.modulo);
     // }
 
-    response = await ApiHelper.getObras(widget.user.modulo);
+    response = await ApiHelper.getObras(widget.cliente);
 
     setState(() {
       _showLoader = false;

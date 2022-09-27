@@ -47,11 +47,19 @@ class _InspeccionesMenuScreenState extends State<InspeccionesMenuScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
-                Icon(Icons.format_list_bulleted),
+                Icon(
+                  Icons.format_list_bulleted,
+                  size: 28,
+                  color: Colors.black,
+                ),
                 SizedBox(
                   width: 35,
                 ),
-                Text('Mis Inspecciones'),
+                Text('Mis Inspecciones',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                    )),
               ],
             ),
             style: ElevatedButton.styleFrom(
@@ -79,11 +87,19 @@ class _InspeccionesMenuScreenState extends State<InspeccionesMenuScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: const [
-                Icon(Icons.photo_album),
+                Icon(
+                  Icons.photo_album,
+                  size: 28,
+                  color: Colors.black,
+                ),
                 SizedBox(
                   width: 35,
                 ),
-                Text('Fotos Insp. últ. 72hs'),
+                Text('Fotos Insp. últ. 72hs',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                    )),
               ],
             ),
             style: ElevatedButton.styleFrom(

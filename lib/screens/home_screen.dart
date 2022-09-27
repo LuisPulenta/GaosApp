@@ -183,32 +183,6 @@ class _HomeScreenState extends State<HomeScreen> {
               color: Colors.white,
               height: 1,
             ),
-            Row(
-              children: [
-                Expanded(
-                  child: ListTile(
-                    leading: const Icon(
-                      Icons.construction,
-                      color: Colors.white,
-                    ),
-                    tileColor: const Color(0xff8c8c94),
-                    title: const Text('Obras',
-                        style: TextStyle(fontSize: 15, color: Colors.white)),
-                    onTap: () async {
-                      String? result = await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ObrasScreen(
-                            user: widget.user,
-                            opcion: 1,
-                          ),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
             widget.user.habilitaSSHH == 1
                 ? Row(
                     children: [
