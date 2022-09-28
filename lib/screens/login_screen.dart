@@ -35,6 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
   // String _password = '';
   String _email = 'LNUNEZ';
   String _password = 'LNUNEZ';
+  TextEditingController _passwordController = TextEditingController();
 
   String _emailError = '';
   bool _emailShowError = false;
@@ -81,7 +82,10 @@ class _LoginScreenState extends State<LoginScreen> {
         direccion: '',
         telefono: '',
         carpetaImagenes: '',
-        mensageSSHH: '');
+        mensageSSHH: '',
+        activo: false,
+        logoEmpresa: '',
+        logoFullPath: '');
     initPlatformState();
     _getPosition();
     setState(() {});
@@ -244,6 +248,7 @@ class _LoginScreenState extends State<LoginScreen> {
       padding: const EdgeInsets.all(10),
       child: TextField(
         obscureText: !_passwordShow,
+        controller: _passwordController,
         decoration: InputDecoration(
             fillColor: Colors.white,
             filled: true,
@@ -467,6 +472,9 @@ class _LoginScreenState extends State<LoginScreen> {
           actions: <AlertDialogAction>[
             AlertDialogAction(key: null, label: 'Aceptar'),
           ]);
+      _password = '';
+      _passwordController.text = '';
+      setState(() {});
       Navigator.push(
         context,
         MaterialPageRoute(

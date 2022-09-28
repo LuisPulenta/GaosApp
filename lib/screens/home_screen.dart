@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:adaptive_dialog/adaptive_dialog.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
@@ -71,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xff004f95),
+        backgroundColor: const Color(0xff004f95),
         title: const Text('GaosApp'),
         centerTitle: true,
       ),
@@ -98,12 +99,27 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: Image.asset(
-                "assets/kplogo.png",
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: CachedNetworkImage(
+                imageUrl: widget.empresa.logoFullPath.toString(),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+                fit: BoxFit.cover,
                 height: alto * 0.1,
+                placeholder: (context, url) => const Image(
+                  image: AssetImage('assets/loading.gif'),
+                  fit: BoxFit.cover,
+                  height: 100,
+                  width: 100,
+                ),
               ),
             ),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 15),
+            //   child: Image.asset(
+            //     "assets/kplogo.png",
+            //     height: alto * 0.1,
+            //   ),
+            // ),
             SizedBox(height: alto * 0.1),
             Text(
               'Bienvenido/a ${widget.user.fullName}',
@@ -155,9 +171,22 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-                  const Image(
-                    image: AssetImage('assets/kplogo.png'),
+                  // const Image(
+                  //   image: AssetImage('assets/kplogo.png'),
+                  //   width: 200,
+                  // ),
+                  CachedNetworkImage(
+                    imageUrl: widget.empresa.logoFullPath.toString(),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                    fit: BoxFit.contain,
                     width: 200,
+                    height: 50,
+                    placeholder: (context, url) => const Image(
+                      image: AssetImage('assets/loading.gif'),
+                      fit: BoxFit.cover,
+                      width: 200,
+                    ),
                   ),
                   const SizedBox(
                     height: 40,

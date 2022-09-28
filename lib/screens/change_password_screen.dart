@@ -235,7 +235,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
     //   _confirmPasswordShowError = false;
     // }
 
-    if (_currentPassword != widget.user.contrasena) {
+    if (_currentPassword.toLowerCase() !=
+        widget.user.contrasena.toLowerCase()) {
       isValid = false;
       _currentPasswordShowError = true;
       _currentPasswordError = 'Error en el ingreso de tu contraseña actual';

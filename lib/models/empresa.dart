@@ -5,6 +5,9 @@ class Empresa {
   String? telefono = '';
   String? carpetaImagenes = '';
   String? mensageSSHH = '';
+  bool activo = false;
+  String? logoEmpresa = '';
+  String? logoFullPath = '';
 
   Empresa(
       {required this.idEmpresa,
@@ -12,7 +15,10 @@ class Empresa {
       required this.direccion,
       required this.telefono,
       required this.carpetaImagenes,
-      required this.mensageSSHH});
+      required this.mensageSSHH,
+      required this.activo,
+      required this.logoEmpresa,
+      required this.logoFullPath});
 
   Empresa.fromJson(Map<String, dynamic> json) {
     idEmpresa = json['idEmpresa'];
@@ -21,6 +27,9 @@ class Empresa {
     telefono = json['telefono'];
     carpetaImagenes = json['carpetaImagenes'];
     mensageSSHH = json['mensageSSHH'];
+    activo = json['activo'];
+    logoEmpresa = json['logoEmpresa'];
+    logoFullPath = json['logoFullPath'];
   }
 
   Map<String, dynamic> toJson() {
@@ -31,6 +40,9 @@ class Empresa {
     data['telefono'] = telefono;
     data['carpetaImagenes'] = carpetaImagenes;
     data['mensageSSHH'] = mensageSSHH;
+    data['activo'] = activo;
+    data['logoEmpresa'] = logoEmpresa;
+    data['logoFullPath'] = logoFullPath;
     return data;
   }
 }
