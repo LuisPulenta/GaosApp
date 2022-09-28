@@ -28,6 +28,7 @@ class Causante {
   String? notasCausantes = '';
   String? notas = '';
   int idEmpresa = 0;
+  String? dni = '';
 
   Causante(
       {required this.nroCausante,
@@ -58,7 +59,8 @@ class Causante {
       required this.provincia,
       required this.notasCausantes,
       required this.notas,
-      required this.idEmpresa});
+      required this.idEmpresa,
+      required this.dni});
 
   Causante.fromJson(Map<String, dynamic> json) {
     nroCausante = json['nroCausante'];
@@ -90,39 +92,41 @@ class Causante {
     notasCausantes = json['notasCausantes'];
     notas = json['notas'];
     idEmpresa = json['idEmpresa'];
+    dni = json['dni'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['nroCausante'] = this.nroCausante;
-    data['grupo'] = this.grupo;
-    data['codigo'] = this.codigo;
-    data['nombre'] = this.nombre;
-    data['apellido'] = this.apellido;
-    data['estado'] = this.estado;
-    data['direccion'] = this.direccion;
-    data['numero'] = this.numero;
-    data['piso'] = this.piso;
-    data['dpto'] = this.dpto;
-    data['torre'] = this.torre;
-    data['ciudad'] = this.ciudad;
-    data['telefono'] = this.telefono;
-    data['caracTelefono'] = this.caracTelefono;
-    data['codpos'] = this.codpos;
-    data['encargado'] = this.encargado;
-    data['email'] = this.email;
-    data['fecha'] = this.fecha;
-    data['tipoprov'] = this.tipoprov;
-    data['cuit'] = this.cuit;
-    data['razonSocial'] = this.razonSocial;
-    data['nivel'] = this.nivel;
-    data['barrio'] = this.barrio;
-    data['fax'] = this.fax;
-    data['caracFax'] = this.caracFax;
-    data['provincia'] = this.provincia;
-    data['notasCausantes'] = this.notasCausantes;
-    data['notas'] = this.notas;
-    data['idEmpresa'] = this.idEmpresa;
+    data['nroCausante'] = nroCausante;
+    data['grupo'] = grupo;
+    data['codigo'] = codigo;
+    data['nombre'] = nombre;
+    data['apellido'] = apellido;
+    data['estado'] = estado;
+    data['direccion'] = direccion;
+    data['numero'] = numero;
+    data['piso'] = piso;
+    data['dpto'] = dpto;
+    data['torre'] = torre;
+    data['ciudad'] = ciudad;
+    data['telefono'] = telefono;
+    data['caracTelefono'] = caracTelefono;
+    data['codpos'] = codpos;
+    data['encargado'] = encargado;
+    data['email'] = email;
+    data['fecha'] = fecha;
+    data['tipoprov'] = tipoprov;
+    data['cuit'] = cuit;
+    data['razonSocial'] = razonSocial;
+    data['nivel'] = nivel;
+    data['barrio'] = barrio;
+    data['fax'] = fax;
+    data['caracFax'] = caracFax;
+    data['provincia'] = provincia;
+    data['notasCausantes'] = notasCausantes;
+    data['notas'] = notas;
+    data['idEmpresa'] = idEmpresa;
+    data['dni'] = dni;
     return data;
   }
 }

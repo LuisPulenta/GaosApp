@@ -458,14 +458,35 @@ class _LoginScreenState extends State<LoginScreen> {
       _showLoader = false;
     });
 
-    Navigator.pushReplacement(
+    if (user.contrasena == "123456") {
+      await showAlertDialog(
+          context: context,
+          title: 'Error',
+          message:
+              'Es la primera vez que ingresa a la App. Deber cambiar su Contraseña,',
+          actions: <AlertDialogAction>[
+            AlertDialogAction(key: null, label: 'Aceptar'),
+          ]);
+      Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => HomeScreen(
-                  user: user,
-                  empresa: _empresa,
-                  nroConexion: webSesion.nroConexion,
-                )));
+          builder: (context) => ChangePasswordScreen(
+            user: user,
+          ),
+        ),
+      );
+    } else {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => HomeScreen(
+            user: user,
+            empresa: _empresa,
+            nroConexion: webSesion.nroConexion,
+          ),
+        ),
+      );
+    }
   }
 
 //*****************************************************************************

@@ -216,6 +216,36 @@ class _HomeScreenState extends State<HomeScreen> {
               color: Colors.white,
               height: 1,
             ),
+            Row(
+              children: [
+                Expanded(
+                  child: ListTile(
+                    leading: const Icon(
+                      Icons.settings,
+                      color: Colors.white,
+                    ),
+                    tileColor: const Color(0xff8c8c94),
+                    title: const Text('Configuración',
+                        style: TextStyle(fontSize: 15, color: Colors.white)),
+                    onTap: () async {
+                      //guardarLocalizacion();
+                      String? result = await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AjustesScreen(
+                            user: widget.user,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+            const Divider(
+              color: Colors.white,
+              height: 1,
+            ),
             ListTile(
               leading: const Icon(
                 Icons.logout,

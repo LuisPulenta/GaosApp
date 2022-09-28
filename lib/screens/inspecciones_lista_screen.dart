@@ -259,7 +259,7 @@ class _InspeccionesListaScreenState extends State<InspeccionesListaScreen> {
                                     Text("Fecha: ",
                                         style: TextStyle(
                                           fontSize: 12,
-                                          color: Color(0xFF781f1e),
+                                          color: Color(0xff004f95),
                                           fontWeight: FontWeight.bold,
                                         )),
                                   ],
@@ -269,7 +269,7 @@ class _InspeccionesListaScreenState extends State<InspeccionesListaScreen> {
                                     Text("Empleado: ",
                                         style: TextStyle(
                                           fontSize: 12,
-                                          color: Color(0xFF781f1e),
+                                          color: Color(0xff004f95),
                                           fontWeight: FontWeight.bold,
                                         )),
                                   ],
@@ -279,7 +279,7 @@ class _InspeccionesListaScreenState extends State<InspeccionesListaScreen> {
                                     Text("Cliente: ",
                                         style: TextStyle(
                                           fontSize: 12,
-                                          color: Color(0xFF781f1e),
+                                          color: Color(0xff004f95),
                                           fontWeight: FontWeight.bold,
                                         )),
                                   ],
@@ -289,7 +289,7 @@ class _InspeccionesListaScreenState extends State<InspeccionesListaScreen> {
                                     Text("Tipo Trabajo: ",
                                         style: TextStyle(
                                           fontSize: 12,
-                                          color: Color(0xFF781f1e),
+                                          color: Color(0xff004f95),
                                           fontWeight: FontWeight.bold,
                                         )),
                                   ],
@@ -299,7 +299,7 @@ class _InspeccionesListaScreenState extends State<InspeccionesListaScreen> {
                                     Text("Obra: ",
                                         style: TextStyle(
                                           fontSize: 12,
-                                          color: Color(0xFF781f1e),
+                                          color: Color(0xff004f95),
                                           fontWeight: FontWeight.bold,
                                         )),
                                   ],
@@ -309,7 +309,7 @@ class _InspeccionesListaScreenState extends State<InspeccionesListaScreen> {
                                     Text("Total Preguntas: ",
                                         style: TextStyle(
                                           fontSize: 12,
-                                          color: Color(0xFF781f1e),
+                                          color: Color(0xff004f95),
                                           fontWeight: FontWeight.bold,
                                         )),
                                   ],
@@ -319,7 +319,7 @@ class _InspeccionesListaScreenState extends State<InspeccionesListaScreen> {
                                     Text("Respuestas NO: ",
                                         style: TextStyle(
                                           fontSize: 12,
-                                          color: Color(0xFF781f1e),
+                                          color: Color(0xff004f95),
                                           fontWeight: FontWeight.bold,
                                         )),
                                   ],
@@ -329,7 +329,7 @@ class _InspeccionesListaScreenState extends State<InspeccionesListaScreen> {
                                     Text("Total Puntos: ",
                                         style: TextStyle(
                                           fontSize: 12,
-                                          color: Color(0xFF781f1e),
+                                          color: Color(0xff004f95),
                                           fontWeight: FontWeight.bold,
                                         )),
                                   ],
@@ -388,7 +388,7 @@ class _InspeccionesListaScreenState extends State<InspeccionesListaScreen> {
                                         Text(
                                             e.obra
                                                 .toString()
-                                                .substring(1, finobra),
+                                                .substring(0, finobra),
                                             style: const TextStyle(
                                               fontSize: 12,
                                             )),
@@ -430,7 +430,7 @@ class _InspeccionesListaScreenState extends State<InspeccionesListaScreen> {
                           icon: const Icon(
                             Icons.looks_two_outlined,
                             size: 45,
-                            color: Color(0xFF781f1e),
+                            color: Color(0xff004f95),
                           ),
                           onPressed: () {
                             _goInfoInspeccion(e);

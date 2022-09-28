@@ -12,6 +12,8 @@ class Obra {
   String? grupoAlmacen = '';
   List<ObrasDocumento> obrasDocumentos = [];
   int idCliente = 0;
+  String? central = '';
+  String? direccion = '';
 
   Obra(
       {required this.nroObra,
@@ -24,7 +26,9 @@ class Obra {
       required this.modulo,
       required this.grupoAlmacen,
       required this.obrasDocumentos,
-      required this.idCliente});
+      required this.idCliente,
+      required this.central,
+      required this.direccion});
 
   Obra.fromJson(Map<String, dynamic> json) {
     nroObra = json['nroObra'];
@@ -42,6 +46,8 @@ class Obra {
         obrasDocumentos.add(ObrasDocumento.fromJson(v));
       });
       idCliente = json['idCliente'];
+      central = json['central'];
+      direccion = json['direccion'];
     }
   }
 
@@ -58,6 +64,8 @@ class Obra {
     data['grupoAlmacen'] = grupoAlmacen;
     data['obrasDocumentos'] = obrasDocumentos.map((v) => v.toJson()).toList();
     data['idCliente'] = idCliente;
+    data['central'] = central;
+    data['direccion'] = direccion;
     return data;
   }
 }

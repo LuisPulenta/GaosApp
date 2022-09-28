@@ -81,32 +81,34 @@ class _InspeccionesScreenState extends State<InspeccionesScreen> {
   final TextEditingController _dniSRController = TextEditingController();
 
   Obra obra = Obra(
-    nroObra: 0,
-    nombreObra: '',
-    elempep: '',
-    observaciones: '',
-    finalizada: 0,
-    supervisore: '',
-    codigoEstado: '',
-    modulo: '',
-    grupoAlmacen: '',
-    obrasDocumentos: [],
-    idCliente: 0,
-  );
+      nroObra: 0,
+      nombreObra: '',
+      elempep: '',
+      observaciones: '',
+      finalizada: 0,
+      supervisore: '',
+      codigoEstado: '',
+      modulo: '',
+      grupoAlmacen: '',
+      obrasDocumentos: [],
+      idCliente: 0,
+      central: '',
+      direccion: '');
 
   Obra obraVacia = Obra(
-    nroObra: 0,
-    nombreObra: '',
-    elempep: '',
-    observaciones: '',
-    finalizada: 0,
-    supervisore: '',
-    codigoEstado: '',
-    modulo: '',
-    grupoAlmacen: '',
-    obrasDocumentos: [],
-    idCliente: 0,
-  );
+      nroObra: 0,
+      nombreObra: '',
+      elempep: '',
+      observaciones: '',
+      finalizada: 0,
+      supervisore: '',
+      codigoEstado: '',
+      modulo: '',
+      grupoAlmacen: '',
+      obrasDocumentos: [],
+      idCliente: 0,
+      central: '',
+      direccion: '');
 
 //*****************************************************************************
 //************************** INIT STATE ***************************************
@@ -144,7 +146,8 @@ class _InspeccionesScreenState extends State<InspeccionesScreen> {
         provincia: '',
         notasCausantes: '',
         notas: '',
-        idEmpresa: 0);
+        idEmpresa: 0,
+        dni: '');
     _getPosition();
     _loadData();
   }
@@ -360,7 +363,7 @@ class _InspeccionesScreenState extends State<InspeccionesScreen> {
             CustomRow(
               icon: Icons.assignment_ind,
               nombredato: 'Documento:',
-              dato: _causante.cuit,
+              dato: _causante.dni,
             ),
           ],
         ),

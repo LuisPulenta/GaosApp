@@ -29,7 +29,7 @@ class CustomRow extends StatelessWidget {
                     )
                   : Icon(
                       icon,
-                      color: const Color(0xFF781f1e),
+                      color: const Color(0xff004f95),
                     )
               : Container(),
           const SizedBox(
@@ -38,7 +38,7 @@ class CustomRow extends StatelessWidget {
           Text(
             nombredato,
             style: const TextStyle(
-                fontWeight: FontWeight.bold, color: Color(0xFF781f1e)),
+                fontWeight: FontWeight.bold, color: Color(0xff004f95)),
           ),
           Expanded(
             child: Text(

@@ -961,7 +961,7 @@ class _InspeccionCuestionarioScreenState
       'idobra': widget.obra.nroObra,
       'supervisor': widget.obra.supervisore,
       'vehiculo': '',
-      'nrolegajo': widget.esContratista == true ? 0 : widget.causante.codigo,
+      'nrolegajo': 0,
       'grupoc': widget.esContratista == true ? 'PPR' : widget.causante.grupo,
       'causantec':
           widget.esContratista == true ? '000000' : widget.causante.codigo,
@@ -979,6 +979,8 @@ class _InspeccionCuestionarioScreenState
       'dniSr': widget.esContratista == true ? widget.dniSR : '',
       'nombreSr': widget.esContratista == true ? widget.nombreSR : '',
       'idTipoTrabajo': widget.tipotrabajo,
+      'estadosChr': '',
+      'idEmpresa': widget.user.idEmpresa,
     };
 
     Response response =

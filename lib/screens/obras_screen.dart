@@ -32,18 +32,19 @@ class _ObrasScreenState extends State<ObrasScreen> {
   bool _isFiltered = false;
   String _search = '';
   Obra obraSelected = Obra(
-    nroObra: 0,
-    nombreObra: '',
-    elempep: '',
-    observaciones: '',
-    finalizada: 0,
-    supervisore: '',
-    codigoEstado: '',
-    modulo: '',
-    grupoAlmacen: '',
-    obrasDocumentos: [],
-    idCliente: 0,
-  );
+      nroObra: 0,
+      nombreObra: '',
+      elempep: '',
+      observaciones: '',
+      finalizada: 0,
+      supervisore: '',
+      codigoEstado: '',
+      modulo: '',
+      grupoAlmacen: '',
+      obrasDocumentos: [],
+      idCliente: 0,
+      central: '',
+      direccion: '');
 
 //*****************************************************************************
 //************************** INIT STATE ***************************************
@@ -205,7 +206,7 @@ class _ObrasScreenState extends State<ObrasScreen> {
           Text(_obras.length.toString(),
               style: const TextStyle(
                 fontSize: 14,
-                color: Colors.white,
+                color: Colors.black,
                 fontWeight: FontWeight.bold,
               )),
         ],
@@ -273,21 +274,21 @@ class _ObrasScreenState extends State<ObrasScreen> {
                                             fontWeight: FontWeight.bold,
                                           )),
                                       Expanded(
-                                        flex: 5,
+                                        flex: 4,
                                         child: Text(e.nroObra.toString(),
                                             style: const TextStyle(
                                               fontSize: 12,
                                             )),
                                       ),
-                                      const Text("Módulo: ",
+                                      const Text("Def. Proy.: ",
                                           style: TextStyle(
                                             fontSize: 12,
                                             color: Color(0xff004f95),
                                             fontWeight: FontWeight.bold,
                                           )),
                                       Expanded(
-                                        flex: 2,
-                                        child: Text(e.modulo.toString(),
+                                        flex: 4,
+                                        child: Text(e.elempep,
                                             style: const TextStyle(
                                               fontSize: 12,
                                             )),
@@ -318,31 +319,75 @@ class _ObrasScreenState extends State<ObrasScreen> {
                                   ),
                                   Row(
                                     children: [
-                                      const Text("OP/N° Fuga: ",
+                                      const Text("Dirección: ",
                                           style: TextStyle(
                                             fontSize: 12,
                                             color: Color(0xff004f95),
                                             fontWeight: FontWeight.bold,
                                           )),
                                       Expanded(
-                                        child: Text(e.elempep,
-                                            style: const TextStyle(
-                                              fontSize: 12,
-                                            )),
+                                        child: e.direccion != null
+                                            ? Text(e.direccion!,
+                                                style: const TextStyle(
+                                                  fontSize: 12,
+                                                ))
+                                            : const Text(''),
                                       ),
-                                      const SizedBox(
-                                        width: 20,
-                                      ),
-                                      const Text("Fotos y Doc: ",
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Text("Supervisor: ",
                                           style: TextStyle(
                                             fontSize: 12,
                                             color: Color(0xff004f95),
                                             fontWeight: FontWeight.bold,
                                           )),
-                                      Text(e.obrasDocumentos.length.toString(),
-                                          style: const TextStyle(
+                                      Expanded(
+                                        child: e.supervisore != null
+                                            ? Text(e.supervisore!,
+                                                style: const TextStyle(
+                                                  fontSize: 12,
+                                                ))
+                                            : const Text(''),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Row(
+                                    children: [
+                                      const Text("Central: ",
+                                          style: TextStyle(
                                             fontSize: 12,
+                                            color: Color(0xff004f95),
+                                            fontWeight: FontWeight.bold,
                                           )),
+                                      Expanded(
+                                        child: e.central != null
+                                            ? Text(e.central!,
+                                                style: const TextStyle(
+                                                  fontSize: 12,
+                                                ))
+                                            : const Text(''),
+                                      ),
+                                      // const SizedBox(
+                                      //   width: 20,
+                                      // ),
+                                      // const Text("Fotos y Doc: ",
+                                      //     style: TextStyle(
+                                      //       fontSize: 12,
+                                      //       color: Color(0xff004f95),
+                                      //       fontWeight: FontWeight.bold,
+                                      //     )),
+                                      // Text(e.obrasDocumentos.length.toString(),
+                                      //     style: const TextStyle(
+                                      //       fontSize: 12,
+                                      //     )),
                                     ],
                                   ),
                                 ],
