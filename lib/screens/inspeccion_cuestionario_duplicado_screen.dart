@@ -960,7 +960,7 @@ class _InspeccionCuestionarioDuplicadoScreenState
       'idobra': widget.obra.nroObra,
       'supervisor': widget.obra.supervisore,
       'vehiculo': '',
-      'nrolegajo': widget.esContratista == true ? 0 : widget.causante.codigo,
+      'nrolegajo': 0,
       'grupoc': widget.esContratista == true ? 'PPR' : widget.causante.grupo,
       'causantec':
           widget.esContratista == true ? '000000' : widget.causante.codigo,
@@ -978,6 +978,8 @@ class _InspeccionCuestionarioDuplicadoScreenState
       'dniSr': widget.esContratista == true ? widget.dniSR : '',
       'nombreSr': widget.esContratista == true ? widget.nombreSR : '',
       'idTipoTrabajo': widget.tipotrabajo,
+      'estadosChr': '',
+      'idEmpresa': widget.user.idEmpresa,
     };
 
     Response response = await ApiHelper.postInspeccionDetalle(
@@ -1026,7 +1028,10 @@ class _InspeccionCuestionarioDuplicadoScreenState
         String foto = '';
 
         if (element['fotodesdeweb'] == true) {
-          foto = '~' + element['imagedesdeweb'].substring(35);
+          foto = '~' + element['imagedesdeweb'].substring(42);
+          if (foto == '~/images/noimage.png') {
+            foto = '';
+          }
         }
 
         Map<String, dynamic> request3 = {
