@@ -232,6 +232,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               MaterialPageRoute(
                                 builder: (context) => InspeccionesMenuScreen(
                                   user: widget.user,
+                                  empresa: widget.empresa,
                                 ),
                               ),
                             );

@@ -9,7 +9,9 @@ import 'package:gaosapp/screens/screens.dart';
 
 class InspeccionesListaScreen extends StatefulWidget {
   final User user;
-  const InspeccionesListaScreen({Key? key, required this.user})
+  final Empresa empresa;
+  const InspeccionesListaScreen(
+      {Key? key, required this.user, required this.empresa})
       : super(key: key);
 
   @override
@@ -452,6 +454,7 @@ class _InspeccionesListaScreenState extends State<InspeccionesListaScreen> {
         MaterialPageRoute(
             builder: (context) => InspeccionDuplicarScreen(
                   user: widget.user,
+                  empresa: widget.empresa,
                   vistaInspeccion: e,
                 )));
     if (result == 'yes') {
@@ -488,6 +491,7 @@ class _InspeccionesListaScreenState extends State<InspeccionesListaScreen> {
         MaterialPageRoute(
             builder: (context) => InspeccionesScreen(
                   user: widget.user,
+                  empresa: widget.empresa,
                 )));
     if (result == 'yes') {
       _getInspecciones();

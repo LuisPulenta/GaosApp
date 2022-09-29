@@ -14,6 +14,7 @@ import 'package:gaosapp/screens/screens.dart';
 
 class InspeccionCuestionarioDuplicadoScreen extends StatefulWidget {
   final User user;
+  final Empresa empresa;
   final Causante causante;
   final String observaciones;
   final Obra obra;
@@ -28,6 +29,7 @@ class InspeccionCuestionarioDuplicadoScreen extends StatefulWidget {
   const InspeccionCuestionarioDuplicadoScreen(
       {Key? key,
       required this.user,
+      required this.empresa,
       required this.causante,
       required this.observaciones,
       required this.obra,
@@ -1020,6 +1022,7 @@ class _InspeccionCuestionarioDuplicadoScreenState
           'ponderacionPuntos': element['ponderacionpuntos'],
           'cumple': element['cumple'],
           'imagearray': base64image,
+          'empresa': widget.empresa.nombreempresa,
         };
 
         await ApiHelper.post(

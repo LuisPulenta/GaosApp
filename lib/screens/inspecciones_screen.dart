@@ -9,7 +9,10 @@ import 'package:gaosapp/widgets/widgets.dart';
 
 class InspeccionesScreen extends StatefulWidget {
   final User user;
-  const InspeccionesScreen({Key? key, required this.user}) : super(key: key);
+  final Empresa empresa;
+  const InspeccionesScreen(
+      {Key? key, required this.user, required this.empresa})
+      : super(key: key);
 
   @override
   _InspeccionesScreenState createState() => _InspeccionesScreenState();
@@ -754,6 +757,7 @@ class _InspeccionesScreenState extends State<InspeccionesScreen> {
         MaterialPageRoute(
             builder: (context) => InspeccionCuestionarioScreen(
                   user: widget.user,
+                  empresa: widget.empresa,
                   causante: _causante,
                   observaciones: _observacionesController.text,
                   obra: obra,

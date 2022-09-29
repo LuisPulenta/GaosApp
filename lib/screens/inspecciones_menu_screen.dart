@@ -4,7 +4,9 @@ import 'package:gaosapp/screens/screens.dart';
 
 class InspeccionesMenuScreen extends StatefulWidget {
   final User user;
-  const InspeccionesMenuScreen({Key? key, required this.user})
+  final Empresa empresa;
+  const InspeccionesMenuScreen(
+      {Key? key, required this.user, required this.empresa})
       : super(key: key);
 
   @override
@@ -75,6 +77,7 @@ class _InspeccionesMenuScreenState extends State<InspeccionesMenuScreen> {
                 MaterialPageRoute(
                   builder: (context) => InspeccionesListaScreen(
                     user: widget.user,
+                    empresa: widget.empresa,
                   ),
                 ),
               );

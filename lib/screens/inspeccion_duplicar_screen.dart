@@ -11,10 +11,14 @@ import 'package:gaosapp/widgets/widgets.dart';
 
 class InspeccionDuplicarScreen extends StatefulWidget {
   final User user;
+  final Empresa empresa;
   final VistaInspeccion vistaInspeccion;
 
   const InspeccionDuplicarScreen(
-      {Key? key, required this.user, required this.vistaInspeccion})
+      {Key? key,
+      required this.user,
+      required this.empresa,
+      required this.vistaInspeccion})
       : super(key: key);
 
   @override
@@ -763,6 +767,7 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
 
             builder: (context) => InspeccionCuestionarioDuplicadoScreen(
                   user: widget.user,
+                  empresa: widget.empresa,
                   causante: _causante,
                   observaciones: _observacionesController.text,
                   obra: _obra,
