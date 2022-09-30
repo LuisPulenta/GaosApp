@@ -1,4 +1,4 @@
-package com.example.gaosapp
+package com.luisnu.gaosapp
 
 import io.flutter.embedding.android.FlutterActivity
 
