@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:gaosapp/components/loader_component.dart';
 import 'package:gaosapp/helpers/api_helper.dart';
 import 'package:gaosapp/models/models.dart';
-import 'package:gaosapp/models/response.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   final User user;
@@ -20,17 +19,14 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   String _currentPassword = '';
   String _currentPasswordError = '';
   bool _currentPasswordShowError = false;
-  TextEditingController _currentPasswordController = TextEditingController();
 
   String _newPassword = '';
   String _newPasswordError = '';
   bool _newPasswordShowError = false;
-  TextEditingController _newPasswordController = TextEditingController();
 
   String _confirmPassword = '';
   String _confirmPasswordError = '';
   bool _confirmPasswordShowError = false;
-  TextEditingController _confirmPasswordController = TextEditingController();
 
   bool _passwordShow = false;
 

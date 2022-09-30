@@ -63,27 +63,6 @@ class ApiHelper {
   }
 
 //---------------------------------------------------------------------------
-
-  static Future<Response> putWebSesion(int nroConexion) async {
-    var url = Uri.parse('${Constants.apiUrl}/api/WebSesions/$nroConexion');
-    var response = await http.put(
-      url,
-      headers: {
-        'content-type': 'application/json',
-        'accept': 'application/json',
-      },
-    );
-    var body = response.body;
-
-    if (response.statusCode >= 400) {
-      return Response(isSuccess: false, message: body);
-    }
-
-    var decodedJson = jsonDecode(body);
-    return Response(isSuccess: true, result: decodedJson);
-  }
-
-//---------------------------------------------------------------------------
   static Future<Response> getObras(int idcliente) async {
     var url = Uri.parse('${Constants.apiUrl}/api/Account/GetObras/$idcliente');
     var response = await http.post(

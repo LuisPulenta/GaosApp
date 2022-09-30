@@ -69,7 +69,7 @@ class _ObrasScreenState extends State<ObrasScreen> {
             ? widget.user.modulo == 'ObrasTasa'
                 ? const Text('Obras Tasa')
                 : Text('Obras ' + widget.user.modulo)
-            : Text('Obras'),
+            : const Text('Obras'),
         centerTitle: true,
         actions: <Widget>[
           _isFiltered
@@ -242,7 +242,7 @@ class _ObrasScreenState extends State<ObrasScreen> {
       child: ListView(
         children: _obras.map((e) {
           return Card(
-            color: Color.fromARGB(255, 221, 221, 239),
+            color: const Color.fromARGB(255, 221, 221, 239),
             shadowColor: Colors.white,
             elevation: 10,
             margin: const EdgeInsets.fromLTRB(10, 0, 10, 10),

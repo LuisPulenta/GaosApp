@@ -1,21 +1,15 @@
-import 'dart:async';
 import 'dart:convert';
-import 'dart:math';
 import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:gaosapp/widgets/widgets.dart';
 import 'package:http/http.dart' as http;
 import 'package:gaosapp/helpers/api_helper.dart';
 import 'package:gaosapp/helpers/constants.dart';
 import 'package:gaosapp/components/loader_component.dart';
 import 'package:gaosapp/models/models.dart';
-import 'package:device_information/device_information.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:gaosapp/screens/screens.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:geolocator/geolocator.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -29,13 +23,11 @@ class _LoginScreenState extends State<LoginScreen> {
 //************************** DEFINICION DE VARIABLES **************************
 //*****************************************************************************
 
-  bool _isRunning = false;
-
   // String _email = '';
   // String _password = '';
   String _email = 'LNUNEZ';
   String _password = 'LNUNEZ';
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   String _emailError = '';
   bool _emailShowError = false;
@@ -44,29 +36,9 @@ class _LoginScreenState extends State<LoginScreen> {
   String _passwordError = '';
   bool _passwordShowError = false;
 
-  String _platformVersion = 'Unknown',
-      _imeiNo = "",
-      _modelName = "",
-      _manufacturerName = "",
-      _deviceName = "",
-      _productName = "",
-      _cpuType = "",
-      _hardware = "";
-  var _apiLevel;
-
   bool _rememberme = true;
   bool _passwordShow = false;
   bool _showLoader = false;
-
-  Position _positionUser = const Position(
-      longitude: 0,
-      latitude: 0,
-      timestamp: null,
-      accuracy: 0,
-      altitude: 0,
-      heading: 0,
-      speed: 0,
-      speedAccuracy: 0);
 
 //*****************************************************************************
 //************************** INIT STATE ***************************************
@@ -75,7 +47,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    _isRunning = false;
     _empresa = Empresa(
         idEmpresa: 0,
         nombreempresa: '',
@@ -86,8 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
         activo: false,
         logoEmpresa: '',
         logoFullPath: '');
-    initPlatformState();
-    _getPosition();
+
     setState(() {});
   }
 
@@ -177,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
             top: alto * 0.8,
             left: 100,
             right: 100,
-            child: Container(
+            child: SizedBox(
               width: 100,
               height: 100,
               child: BackGround(
@@ -214,7 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
       padding: const EdgeInsets.all(10),
       child: Theme(
         data: Theme.of(context).copyWith(
-          primaryColor: Color.fromARGB(255, 24, 207, 36),
+          primaryColor: const Color.fromARGB(255, 24, 207, 36),
         ),
         child: TextField(
           keyboardType: TextInputType.emailAddress,
@@ -255,7 +225,7 @@ class _LoginScreenState extends State<LoginScreen> {
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
                 borderSide: const BorderSide(
-                    width: 1, color: const Color.fromARGB(255, 24, 207, 36))),
+                    width: 1, color: Color.fromARGB(255, 24, 207, 36))),
             hintText: 'Contraseña...',
             labelText: 'Contraseña',
             errorText: _passwordShowError ? _passwordError : null,
@@ -287,7 +257,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return CheckboxListTile(
       title: const Text('Recordarme:'),
       value: _rememberme,
-      activeColor: Color.fromARGB(255, 24, 207, 36),
+      activeColor: const Color.fromARGB(255, 24, 207, 36),
       onChanged: (value) {
         setState(() {
           _rememberme = value!;
@@ -422,43 +392,6 @@ class _LoginScreenState extends State<LoginScreen> {
       _storeUser(body, body2);
     }
 
-    // Agregar registro a  websesion
-
-    Random r = Random();
-    int resultado = r.nextInt((99999999 - 10000000) + 1) + 10000000;
-    double hora = (DateTime.now().hour * 3600 +
-            DateTime.now().minute * 60 +
-            DateTime.now().second +
-            DateTime.now().millisecond * 0.001) *
-        100;
-
-    WebSesion webSesion = WebSesion(
-        nroConexion: resultado,
-        usuario: user.idUsuario.toString(),
-        iP: _imeiNo,
-        loginDate: DateTime.now().toString(),
-        loginTime: hora.round(),
-        modulo: 'App-${user.codigoCausante}',
-        logoutDate: "",
-        logoutTime: 0,
-        conectAverage: 0,
-        id_ws: 0,
-        versionsistema: Constants.version);
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('nroConexion', resultado);
-
-    // Si hay internet subir al servidor websesion
-
-    connectivityResult = await Connectivity().checkConnectivity();
-
-    if (connectivityResult != ConnectivityResult.none) {
-      await _postWebSesion(webSesion);
-    }
-
-    //Guarda ubicación del Usuario en Tabla UsuariosGeos
-    _isRunning = true;
-
     setState(() {
       _showLoader = false;
     });
@@ -470,7 +403,7 @@ class _LoginScreenState extends State<LoginScreen> {
           message:
               'Es la primera vez que ingresa a la App. Deber cambiar su Contraseña,',
           actions: <AlertDialogAction>[
-            AlertDialogAction(key: null, label: 'Aceptar'),
+            const AlertDialogAction(key: null, label: 'Aceptar'),
           ]);
       _password = '';
       _passwordController.text = '';
@@ -490,7 +423,6 @@ class _LoginScreenState extends State<LoginScreen> {
           builder: (context) => HomeScreen(
             user: user,
             empresa: _empresa,
-            nroConexion: webSesion.nroConexion,
           ),
         ),
       );
@@ -535,181 +467,5 @@ class _LoginScreenState extends State<LoginScreen> {
     await prefs.setString('userBody', body);
     await prefs.setString('empresaBody', body2);
     await prefs.setString('date', DateTime.now().toString());
-  }
-
-//*****************************************************************************
-//******************** METODO POSTWEBSESION ***********************************
-//*****************************************************************************
-
-  Future<void> _postWebSesion(WebSesion webSesion) async {
-    Map<String, dynamic> requestWebSesion = {
-      'nroConexion': webSesion.nroConexion,
-      'usuario': webSesion.usuario,
-      'iP': webSesion.iP,
-      'loginDate': webSesion.loginDate,
-      'loginTime': webSesion.loginTime,
-      'modulo': webSesion.modulo,
-      'logoutDate': webSesion.logoutDate,
-      'logoutTime': webSesion.logoutTime,
-      'conectAverage': webSesion.conectAverage,
-      'id_ws': webSesion.id_ws,
-      'versionsistema': webSesion.versionsistema,
-    };
-
-    Response response =
-        await ApiHelper.post('/api/WebSesions/', requestWebSesion);
-  }
-
-//*****************************************************************************
-//************************** METODO INITPLATFORMSTATE *************************
-//*****************************************************************************
-
-  Future<void> initPlatformState() async {
-    late String platformVersion,
-        imeiNo = '',
-        modelName = '',
-        manufacturer = '',
-        deviceName = '',
-        productName = '',
-        cpuType = '',
-        hardware = '';
-    var apiLevel;
-    // Platform messages may fail,
-    // so we use a try/catch PlatformException.
-
-    var status = await Permission.phone.status;
-
-    if (status.isDenied) {
-      await showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              title: const Text('Aviso'),
-              content: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: const <Widget>[
-                    Text(
-                        'La App necesita que habilite el Permiso de acceso al teléfono para registrar el IMEI del celular con que se loguea.'),
-                    SizedBox(
-                      height: 10,
-                    ),
-                  ]),
-              actions: <Widget>[
-                TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: const Text('Ok')),
-              ],
-            );
-          });
-      openAppSettings();
-      //exit(0);
-    }
-
-    try {
-      platformVersion = await DeviceInformation.platformVersion;
-      imeiNo = await DeviceInformation.deviceIMEINumber;
-      modelName = await DeviceInformation.deviceModel;
-      manufacturer = await DeviceInformation.deviceManufacturer;
-      apiLevel = await DeviceInformation.apiLevel;
-      deviceName = await DeviceInformation.deviceName;
-      productName = await DeviceInformation.productName;
-      cpuType = await DeviceInformation.cpuName;
-      hardware = await DeviceInformation.hardware;
-    } on PlatformException catch (e) {
-      platformVersion = '${e.message}';
-    }
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      _platformVersion = "Running on :$platformVersion";
-      _imeiNo = imeiNo;
-      _modelName = modelName;
-      _manufacturerName = manufacturer;
-      _apiLevel = apiLevel;
-      _deviceName = deviceName;
-      _productName = productName;
-      _cpuType = cpuType;
-      _hardware = hardware;
-    });
-  }
-
-//*****************************************************************************
-//************************** METODO GETPOSITION **********************************
-//*****************************************************************************
-
-  Future _getPosition() async {
-    LocationPermission permission;
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                title: const Text('Aviso'),
-                content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: const <Widget>[
-                      Text('El permiso de localización está negado.'),
-                      SizedBox(
-                        height: 10,
-                      ),
-                    ]),
-                actions: <Widget>[
-                  TextButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      child: const Text('Ok')),
-                ],
-              );
-            });
-        return;
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      showDialog(
-          context: context,
-          builder: (context) {
-            return AlertDialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              title: const Text('Aviso'),
-              content: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: const <Widget>[
-                    Text(
-                        'El permiso de localización está negado permanentemente. No se puede requerir este permiso.'),
-                    SizedBox(
-                      height: 10,
-                    ),
-                  ]),
-              actions: <Widget>[
-                TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: const Text('Ok')),
-              ],
-            );
-          });
-      return;
-    }
-
-    var connectivityResult = await Connectivity().checkConnectivity();
-
-    if (connectivityResult != ConnectivityResult.none) {
-      _positionUser = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
-    }
   }
 }

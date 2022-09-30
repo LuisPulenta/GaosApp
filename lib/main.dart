@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gaosapp/models/models.dart';
-import 'package:gaosapp/models/user.dart';
 import 'package:gaosapp/screens/screens.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -21,7 +20,6 @@ class _MyAppState extends State<MyApp> {
   bool _showLoginPage = true;
   late User _user;
   late Empresa _empresa;
-  int _nroConexion = 0;
 
   @override
   void initState() {
@@ -46,7 +44,7 @@ class _MyAppState extends State<MyApp> {
       title: 'Rowing App',
       theme: ThemeData().copyWith(
         colorScheme: ThemeData().colorScheme.copyWith(
-              primary: Color.fromARGB(255, 24, 207, 36),
+              primary: const Color.fromARGB(255, 24, 207, 36),
             ),
         brightness: Brightness.light,
         primaryColor: const Color.fromARGB(255, 24, 207, 36),
@@ -60,7 +58,6 @@ class _MyAppState extends State<MyApp> {
               : HomeScreen(
                   user: _user,
                   empresa: _empresa,
-                  nroConexion: _nroConexion,
                 ),
     );
   }
@@ -74,7 +71,6 @@ class _MyAppState extends State<MyApp> {
       String? userBody = prefs.getString('userBody');
       String? empresaBody = prefs.getString('empresaBody');
       String date = prefs.getString('date').toString();
-      int nroConexion = prefs.getInt('nroConexion') as int;
       String dateAlmacenada = date.substring(0, 10);
       String dateActual = DateTime.now().toString().substring(0, 10);
       if (userBody != null) {
@@ -82,7 +78,6 @@ class _MyAppState extends State<MyApp> {
         var decodedJson2 = jsonDecode(empresaBody!);
         _user = User.fromJson(decodedJson);
         _empresa = Empresa.fromJson(decodedJson2);
-        _nroConexion = nroConexion;
         if (dateAlmacenada != dateActual) {
           _showLoginPage = true;
         } else {

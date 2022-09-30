@@ -96,7 +96,7 @@ class Causante {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['nroCausante'] = nroCausante;
     data['grupo'] = grupo;
     data['codigo'] = codigo;

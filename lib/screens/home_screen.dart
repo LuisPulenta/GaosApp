@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:adaptive_dialog/adaptive_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
@@ -9,18 +8,12 @@ import 'package:gaosapp/helpers/api_helper.dart';
 import 'package:gaosapp/models/models.dart';
 import 'package:gaosapp/screens/screens.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:battery_plus/battery_plus.dart';
 
 class HomeScreen extends StatefulWidget {
   final User user;
   final Empresa empresa;
-  final int nroConexion;
 
-  const HomeScreen(
-      {Key? key,
-      required this.user,
-      required this.empresa,
-      required this.nroConexion})
+  const HomeScreen({Key? key, required this.user, required this.empresa})
       : super(key: key);
 
   @override
@@ -31,10 +24,6 @@ class _HomeScreenState extends State<HomeScreen> {
 //*****************************************************************************
 //************************** DEFINICION DE VARIABLES **************************
 //*****************************************************************************
-
-  final Battery _battery = Battery();
-  BatteryState? _batteryState;
-  StreamSubscription<BatteryState>? _batteryStateSubscription;
 
   String _codigo = '';
   int? _nroConexion = 0;
@@ -58,10 +47,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-
-    _battery.batteryState.then(_updateBatteryState);
-    _batteryStateSubscription =
-        _battery.onBatteryStateChanged.listen(_updateBatteryState);
   }
 
 //*****************************************************************************
@@ -304,15 +289,6 @@ class _HomeScreenState extends State<HomeScreen> {
     await prefs.setString('userBody', '');
     await prefs.setString('date', '');
 
-    //------------ Guarda en WebSesion la fecha y hora de salida ----------
-    _nroConexion = prefs.getInt('nroConexion');
-
-    var connectivityResult = await Connectivity().checkConnectivity();
-
-    if (connectivityResult != ConnectivityResult.none) {
-      Response response = await ApiHelper.putWebSesion(_nroConexion!);
-    }
-
     Navigator.pushReplacement(
         context, MaterialPageRoute(builder: (context) => const LoginScreen()));
   }
@@ -397,15 +373,5 @@ class _HomeScreenState extends State<HomeScreen> {
           placemarks[0].country.toString();
       ;
     }
-  }
-
-//*****************************************************************************
-//************************** METODO _updateBatteryState ***********************
-//*****************************************************************************
-  void _updateBatteryState(BatteryState state) {
-    if (_batteryState == state) return;
-    setState(() {
-      _batteryState = state;
-    });
   }
 }

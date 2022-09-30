@@ -43,48 +43,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.8.2"
-  battery_plus:
-    dependency: "direct main"
-    description:
-      name: battery_plus
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.1.4+1"
-  battery_plus_linux:
-    dependency: transitive
-    description:
-      name: battery_plus_linux
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.2.0"
-  battery_plus_macos:
-    dependency: transitive
-    description:
-      name: battery_plus_macos
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.1.1"
-  battery_plus_platform_interface:
-    dependency: transitive
-    description:
-      name: battery_plus_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.2.1"
-  battery_plus_web:
-    dependency: transitive
-    description:
-      name: battery_plus_web
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.1.0"
-  battery_plus_windows:
-    dependency: transitive
-    description:
-      name: battery_plus_windows
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.1.2"
   boolean_selector:
     dependency: transitive
     description:
@@ -239,20 +197,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.5"
-  dbus:
-    dependency: transitive
-    description:
-      name: dbus
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.7.3"
-  device_information:
-    dependency: "direct main"
-    description:
-      name: device_information
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.4"
   fake_async:
     dependency: transitive
     description:
@@ -336,13 +280,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  font_awesome_flutter:
-    dependency: "direct main"
-    description:
-      name: font_awesome_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "10.2.1"
   geocoding:
     dependency: "direct main"
     description:
@@ -518,13 +455,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
-  nested:
-    dependency: transitive
-    description:
-      name: nested
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
   octo_image:
     dependency: transitive
     description:
@@ -658,13 +588,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.4"
-  provider:
-    dependency: "direct main"
-    description:
-      name: provider
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "6.0.3"
   quiver:
     dependency: transitive
     description:
@@ -824,13 +747,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.4"
-  upower:
-    dependency: transitive
-    description:
-      name: upower
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.7.0"
   url_launcher:
     dependency: "direct main"
     description:

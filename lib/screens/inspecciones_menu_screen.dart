@@ -42,7 +42,7 @@ class _InspeccionesMenuScreenState extends State<InspeccionesMenuScreen> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(children: [
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           ElevatedButton(
@@ -83,7 +83,7 @@ class _InspeccionesMenuScreenState extends State<InspeccionesMenuScreen> {
               );
             },
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           ElevatedButton(

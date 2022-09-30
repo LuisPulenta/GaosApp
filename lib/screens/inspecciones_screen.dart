@@ -162,7 +162,7 @@ class _InspeccionesScreenState extends State<InspeccionesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 225, 221, 221),
+      backgroundColor: const Color.fromARGB(255, 225, 221, 221),
       appBar: AppBar(
         title: const Text('Nueva Inspección'),
         centerTitle: true,

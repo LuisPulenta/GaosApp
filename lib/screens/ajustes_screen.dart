@@ -39,7 +39,7 @@ class _AjustesScreenState extends State<AjustesScreen> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(children: [
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
           ElevatedButton(
@@ -79,7 +79,7 @@ class _AjustesScreenState extends State<AjustesScreen> {
               );
             },
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
         ]),

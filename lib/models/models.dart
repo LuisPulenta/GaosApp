@@ -14,4 +14,3 @@ export 'package:gaosapp/models/tipos_trabajo.dart';
 export 'package:gaosapp/models/user.dart';
 export 'package:gaosapp/models/vista_inspeccion.dart';
 export 'package:gaosapp/models/vista_inspecciones%20_foto.dart';
-export 'package:gaosapp/models/web_sesion.dart';

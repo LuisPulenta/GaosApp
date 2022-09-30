@@ -478,7 +478,7 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
                 ],
               ),
               style: ElevatedButton.styleFrom(
-                primary: Color.fromARGB(255, 24, 207, 36),
+                primary: const Color.fromARGB(255, 24, 207, 36),
                 minimumSize: const Size(double.infinity, 50),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),

@@ -5,7 +5,6 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:gaosapp/models/models.dart';
-import 'package:gaosapp/models/vista_inspecciones%20_foto.dart';
 
 import '../helpers/api_helper.dart';
 
@@ -148,9 +147,9 @@ class _InspeccionesFotosScreenState extends State<InspeccionesFotosScreen> {
                               ),
                               Row(
                                 children: [
-                                  Container(
+                                  const SizedBox(
                                     width: 86,
-                                    child: const Text(
+                                    child: Text(
                                       "Supervisor: ",
                                       style: TextStyle(
                                           color: Colors.white,
@@ -173,9 +172,9 @@ class _InspeccionesFotosScreenState extends State<InspeccionesFotosScreen> {
                               ),
                               Row(
                                 children: [
-                                  Container(
+                                  const SizedBox(
                                     width: 86,
-                                    child: const Text(
+                                    child: Text(
                                       "Fecha: ",
                                       style: TextStyle(
                                           color: Colors.white,
@@ -197,9 +196,9 @@ class _InspeccionesFotosScreenState extends State<InspeccionesFotosScreen> {
                               ),
                               Row(
                                 children: [
-                                  Container(
+                                  const SizedBox(
                                     width: 86,
-                                    child: const Text(
+                                    child: Text(
                                       "Causante: ",
                                       style: TextStyle(
                                           color: Colors.white,
@@ -223,9 +222,9 @@ class _InspeccionesFotosScreenState extends State<InspeccionesFotosScreen> {
                               ),
                               Row(
                                 children: [
-                                  Container(
+                                  const SizedBox(
                                     width: 86,
-                                    child: const Text(
+                                    child: Text(
                                       "Descripción: ",
                                       style: TextStyle(
                                           color: Colors.white,
@@ -249,9 +248,9 @@ class _InspeccionesFotosScreenState extends State<InspeccionesFotosScreen> {
                               ),
                               Row(
                                 children: [
-                                  Container(
+                                  const SizedBox(
                                     width: 86,
-                                    child: const Text(
+                                    child: Text(
                                       "Cumple: ",
                                       style: TextStyle(
                                           color: Colors.white,
@@ -273,9 +272,9 @@ class _InspeccionesFotosScreenState extends State<InspeccionesFotosScreen> {
                               ),
                               Row(
                                 children: [
-                                  Container(
+                                  const SizedBox(
                                     width: 86,
-                                    child: const Text(
+                                    child: Text(
                                       "Cliente: ",
                                       style: TextStyle(
                                           color: Colors.white,
@@ -306,18 +305,18 @@ class _InspeccionesFotosScreenState extends State<InspeccionesFotosScreen> {
               Flexible(
                 child: ElevatedButton(
                   onPressed: () => _carouselController.previousPage(),
-                  child: Text('←'),
+                  child: const Text('←'),
                 ),
               ),
               Text("Fotos: ${_fotos.length.toString()}",
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: Colors.white,
                       fontSize: 16,
                       fontWeight: FontWeight.bold)),
               Flexible(
                 child: ElevatedButton(
                   onPressed: () => _carouselController.nextPage(),
-                  child: Text('→'),
+                  child: const Text('→'),
                 ),
               ),
               // ...Iterable<int>.generate(_fotos.length).map(
@@ -400,7 +399,7 @@ class _InspeccionesFotosScreenState extends State<InspeccionesFotosScreen> {
               Slider(
                 min: 3,
                 max: 15,
-                activeColor: Color.fromARGB(255, 228, 193, 18),
+                activeColor: const Color.fromARGB(255, 228, 193, 18),
                 value: _sliderValue,
                 onChanged: (value) {
                   _sliderValue = value;
@@ -410,7 +409,7 @@ class _InspeccionesFotosScreenState extends State<InspeccionesFotosScreen> {
               ),
               Center(
                   child: Text(_sliderValue.round().toString(),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14,
                         color: Colors.white,
                         fontWeight: FontWeight.bold,

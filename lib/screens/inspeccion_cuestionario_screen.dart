@@ -76,7 +76,7 @@ class _InspeccionCuestionarioScreenState
   void initState() {
     super.initState();
 
-    widget.detallesFormulariosCompleto.forEach((element) {
+    for (var element in widget.detallesFormulariosCompleto) {
       _elements.add(
         {
           'idcliente': element.idcliente,
@@ -100,7 +100,7 @@ class _InspeccionCuestionarioScreenState
       if (element.cumple == 'N/A') {
         respNA++;
       }
-    });
+    }
   }
 
 //*****************************************************************************
@@ -456,11 +456,11 @@ class _InspeccionCuestionarioScreenState
                                     respSI++;
                                   }
 
-                                  _elements.forEach((e) {
+                                  for (var e in _elements) {
                                     if (e == element) {
                                       e['cumple'] = "SI";
                                     }
-                                  });
+                                  }
 
                                   setState(() {});
                                 },

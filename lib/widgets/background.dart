@@ -12,7 +12,7 @@ class BackGround extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _DownBox();
+    return const _DownBox();
   }
 }
 
@@ -58,7 +58,6 @@ class _DownBoxState extends State<_DownBox>
       } else if (controller.status == AnimationStatus.dismissed) {
         controller.forward();
       }
-      ;
     });
     super.initState();
   }
@@ -73,12 +72,12 @@ class _DownBoxState extends State<_DownBox>
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     controller.forward();
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: size.height * 0.5,
       child: AnimatedBuilder(
         animation: controller,
-        child: IconoLogo(),
+        child: const IconoLogo(),
         builder: (BuildContext context, Widget? child) {
           return Transform.rotate(
             angle: rotacion.value,
@@ -91,9 +90,11 @@ class _DownBoxState extends State<_DownBox>
 }
 
 class IconoLogo extends StatelessWidget {
+  const IconoLogo({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 100,
       height: 100,
       child: Image.asset(
