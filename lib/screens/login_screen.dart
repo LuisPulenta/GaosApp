@@ -106,7 +106,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       Text(
                         Constants.version,
                         style: const TextStyle(
-                            fontSize: 20, color: Color(0xff004f95)),
+                            fontSize: 20,
+                            color: Color.fromARGB(255, 28, 131, 221)),
                       ),
                     ],
                   ),
