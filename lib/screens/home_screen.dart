@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:connectivity/connectivity.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -14,44 +14,47 @@ class HomeScreen extends StatefulWidget {
   final Empresa empresa;
 
   const HomeScreen({Key? key, required this.user, required this.empresa})
-      : super(key: key);
+    : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-//*****************************************************************************
-//************************** DEFINICION DE VARIABLES **************************
-//*****************************************************************************
+  //*****************************************************************************
+  //************************** DEFINICION DE VARIABLES **************************
+  //*****************************************************************************
 
   String _codigo = '';
   int? _nroConexion = 0;
 
   String direccion = '';
 
-  Position _positionUser = const Position(
-      longitude: 0,
-      latitude: 0,
-      timestamp: null,
-      accuracy: 0,
-      altitude: 0,
-      heading: 0,
-      speed: 0,
-      speedAccuracy: 0);
+  Position _positionUser = Position(
+    longitude: 0,
+    latitude: 0,
+    timestamp: DateTime.now(),
+    altitudeAccuracy: 0,
+    headingAccuracy: 0,
+    accuracy: 0,
+    altitude: 0,
+    heading: 0,
+    speed: 0,
+    speedAccuracy: 0,
+  );
 
-//*****************************************************************************
-//************************** INITSTATE *****************************************
-//*****************************************************************************
+  //*****************************************************************************
+  //************************** INITSTATE *****************************************
+  //*****************************************************************************
 
   @override
   void initState() {
     super.initState();
   }
 
-//*****************************************************************************
-//************************** PANTALLA *****************************************
-//*****************************************************************************
+  //*****************************************************************************
+  //************************** PANTALLA *****************************************
+  //*****************************************************************************
 
   @override
   Widget build(BuildContext context) {
@@ -69,60 +72,60 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _getBody() {
     final alto = MediaQuery.of(context).size.height;
     return Container(
-        width: double.infinity,
-        padding: const EdgeInsets.symmetric(vertical: 60),
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Color(0xffffffff),
-              Color(0xffffffff),
-            ],
-          ),
+      width: double.infinity,
+      padding: const EdgeInsets.symmetric(vertical: 60),
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Color(0xffffffff), Color(0xffffffff)],
         ),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: CachedNetworkImage(
-                imageUrl: widget.empresa.logoFullPath.toString(),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
+      ),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: CachedNetworkImage(
+              imageUrl: widget.empresa.logoFullPath.toString(),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
+              fit: BoxFit.cover,
+              height: alto * 0.1,
+              placeholder: (context, url) => const Image(
+                image: AssetImage('assets/loading.gif'),
                 fit: BoxFit.cover,
-                height: alto * 0.1,
-                placeholder: (context, url) => const Image(
-                  image: AssetImage('assets/loading.gif'),
-                  fit: BoxFit.cover,
-                  height: 100,
-                  width: 100,
-                ),
+                height: 100,
+                width: 100,
               ),
             ),
-            // Padding(
-            //   padding: const EdgeInsets.symmetric(horizontal: 15),
-            //   child: Image.asset(
-            //     "assets/kplogo.png",
-            //     height: alto * 0.1,
-            //   ),
-            // ),
-            SizedBox(height: alto * 0.1),
-            Text(
-              'Bienvenido/a ${widget.user.fullName}',
-              style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xff004f95)),
+          ),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 15),
+          //   child: Image.asset(
+          //     "assets/kplogo.png",
+          //     height: alto * 0.1,
+          //   ),
+          // ),
+          SizedBox(height: alto * 0.1),
+          Text(
+            'Bienvenido/a ${widget.user.fullName}',
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Color(0xff004f95),
             ),
-            SizedBox(height: alto * 0.1),
-            Text(
-              'Empresa: ${widget.empresa.nombreempresa}',
-              style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xff004f95)),
+          ),
+          SizedBox(height: alto * 0.1),
+          Text(
+            'Empresa: ${widget.empresa.nombreempresa}',
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Color(0xff004f95),
             ),
-          ],
-        ));
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _getMenu() {
@@ -132,10 +135,7 @@ class _HomeScreenState extends State<HomeScreen> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [
-              Color(0xff004f95),
-              Color(0xff004f95),
-            ],
+            colors: [Color(0xff004f95), Color(0xff004f95)],
           ),
         ),
         child: ListView(
@@ -145,17 +145,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.white,
-                    Colors.white,
-                  ],
+                  colors: [Colors.white, Colors.white],
                 ),
               ),
               child: Column(
                 children: [
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: 20),
                   // const Image(
                   //   image: AssetImage('assets/kplogo.png'),
                   //   width: 200,
@@ -173,16 +168,15 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: 200,
                     ),
                   ),
-                  const SizedBox(
-                    height: 40,
-                  ),
+                  const SizedBox(height: 40),
                   Row(
                     children: [
                       const Text(
                         "Usuario: ",
                         style: (TextStyle(
-                            color: Color(0xff004f95),
-                            fontWeight: FontWeight.bold)),
+                          color: Color(0xff004f95),
+                          fontWeight: FontWeight.bold,
+                        )),
                       ),
                       Text(
                         widget.user.fullName,
@@ -193,10 +187,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            const Divider(
-              color: Colors.white,
-              height: 1,
-            ),
+            const Divider(color: Colors.white, height: 1),
             widget.user.habilitaSSHH == 1
                 ? Row(
                     children: [
@@ -207,9 +198,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: Colors.white,
                           ),
                           tileColor: const Color(0xff8c8c94),
-                          title: const Text('Inspecciones S&H',
-                              style:
-                                  TextStyle(fontSize: 15, color: Colors.white)),
+                          title: const Text(
+                            'Inspecciones S&H',
+                            style: TextStyle(fontSize: 15, color: Colors.white),
+                          ),
                           onTap: () async {
                             //guardarLocalizacion();
                             String? result = await Navigator.push(
@@ -227,29 +219,24 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   )
                 : Container(),
-            const Divider(
-              color: Colors.white,
-              height: 1,
-            ),
+            const Divider(color: Colors.white, height: 1),
             Row(
               children: [
                 Expanded(
                   child: ListTile(
-                    leading: const Icon(
-                      Icons.settings,
-                      color: Colors.white,
-                    ),
+                    leading: const Icon(Icons.settings, color: Colors.white),
                     tileColor: const Color(0xff8c8c94),
-                    title: const Text('Configuración',
-                        style: TextStyle(fontSize: 15, color: Colors.white)),
+                    title: const Text(
+                      'Configuración',
+                      style: TextStyle(fontSize: 15, color: Colors.white),
+                    ),
                     onTap: () async {
                       //guardarLocalizacion();
                       String? result = await Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => AjustesScreen(
-                            user: widget.user,
-                          ),
+                          builder: (context) =>
+                              AjustesScreen(user: widget.user),
                         ),
                       );
                     },
@@ -257,18 +244,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            const Divider(
-              color: Colors.white,
-              height: 1,
-            ),
+            const Divider(color: Colors.white, height: 1),
             ListTile(
-              leading: const Icon(
-                Icons.logout,
-                color: Colors.white,
-              ),
+              leading: const Icon(Icons.logout, color: Colors.white),
               tileColor: const Color(0xff8c8c94),
-              title: const Text('Cerrar Sesión',
-                  style: TextStyle(fontSize: 15, color: Colors.white)),
+              title: const Text(
+                'Cerrar Sesión',
+                style: TextStyle(fontSize: 15, color: Colors.white),
+              ),
               onTap: () {
                 _logOut();
               },
@@ -279,9 +262,9 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-//*****************************************************************************
-//************************** METODO LOGOUT ************************************
-//*****************************************************************************
+  //*****************************************************************************
+  //************************** METODO LOGOUT ************************************
+  //*****************************************************************************
 
   void _logOut() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -290,12 +273,14 @@ class _HomeScreenState extends State<HomeScreen> {
     await prefs.setString('date', '');
 
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const LoginScreen()));
+      context,
+      MaterialPageRoute(builder: (context) => const LoginScreen()),
+    );
   }
 
-//*****************************************************************************
-//************************** METODO GETPOSITION **********************************
-//*****************************************************************************
+  //*****************************************************************************
+  //************************** METODO GETPOSITION **********************************
+  //*****************************************************************************
 
   Future _getPosition() async {
     LocationPermission permission;
@@ -304,34 +289,6 @@ class _HomeScreenState extends State<HomeScreen> {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
         showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                title: const Text('Aviso'),
-                content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: const <Widget>[
-                      Text('El permiso de localización está negado.'),
-                      SizedBox(
-                        height: 10,
-                      ),
-                    ]),
-                actions: <Widget>[
-                  TextButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      child: const Text('Ok')),
-                ],
-              );
-            });
-        return;
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      showDialog(
           context: context,
           builder: (context) {
             return AlertDialog(
@@ -340,21 +297,52 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               title: const Text('Aviso'),
               content: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: const <Widget>[
-                    Text(
-                        'El permiso de localización está negado permanentemente. No se puede requerir este permiso.'),
-                    SizedBox(
-                      height: 10,
-                    ),
-                  ]),
+                mainAxisSize: MainAxisSize.min,
+                children: const <Widget>[
+                  Text('El permiso de localización está negado.'),
+                  SizedBox(height: 10),
+                ],
+              ),
               actions: <Widget>[
                 TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: const Text('Ok')),
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text('Ok'),
+                ),
               ],
             );
-          });
+          },
+        );
+        return;
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            title: const Text('Aviso'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: const <Widget>[
+                Text(
+                  'El permiso de localización está negado permanentemente. No se puede requerir este permiso.',
+                ),
+                SizedBox(height: 10),
+              ],
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('Ok'),
+              ),
+            ],
+          );
+        },
+      );
       return;
     }
 
@@ -362,11 +350,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
     if (connectivityResult != ConnectivityResult.none) {
       _positionUser = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
+        desiredAccuracy: LocationAccuracy.high,
+      );
 
       List<Placemark> placemarks = await placemarkFromCoordinates(
-          _positionUser.latitude, _positionUser.longitude);
-      direccion = placemarks[0].street.toString() +
+        _positionUser.latitude,
+        _positionUser.longitude,
+      );
+      direccion =
+          placemarks[0].street.toString() +
           " - " +
           placemarks[0].locality.toString() +
           " - " +

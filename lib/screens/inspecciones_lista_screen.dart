@@ -1,5 +1,5 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
-import 'package:connectivity/connectivity.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:gaosapp/components/loader_component.dart';
@@ -10,9 +10,11 @@ import 'package:gaosapp/screens/screens.dart';
 class InspeccionesListaScreen extends StatefulWidget {
   final User user;
   final Empresa empresa;
-  const InspeccionesListaScreen(
-      {Key? key, required this.user, required this.empresa})
-      : super(key: key);
+  const InspeccionesListaScreen({
+    Key? key,
+    required this.user,
+    required this.empresa,
+  }) : super(key: key);
 
   @override
   _InspeccionesListaScreenState createState() =>
@@ -41,9 +43,13 @@ class _InspeccionesListaScreenState extends State<InspeccionesListaScreen> {
         actions: <Widget>[
           _isFiltered
               ? IconButton(
-                  onPressed: _removeFilter, icon: const Icon(Icons.filter_none))
+                  onPressed: _removeFilter,
+                  icon: const Icon(Icons.filter_none),
+                )
               : IconButton(
-                  onPressed: _showFilter, icon: const Icon(Icons.filter_alt)),
+                  onPressed: _showFilter,
+                  icon: const Icon(Icons.filter_alt),
+                ),
           // IconButton(onPressed: _addReclamo, icon: Icon(Icons.add_circle))
         ],
       ),
@@ -53,10 +59,7 @@ class _InspeccionesListaScreenState extends State<InspeccionesListaScreen> {
             : _getContent(),
       ),
       floatingActionButton: FloatingActionButton(
-        child: const Icon(
-          Icons.add,
-          size: 38,
-        ),
+        child: const Icon(Icons.add, size: 38),
         backgroundColor: const Color.fromARGB(255, 24, 207, 36),
         onPressed: () => _addInspeccion(),
       ),
@@ -76,19 +79,21 @@ class _InspeccionesListaScreenState extends State<InspeccionesListaScreen> {
         _showLoader = false;
       });
       await showAlertDialog(
-          context: context,
-          title: 'Error',
-          message: 'Verifica que estés conectado a Internet',
-          actions: <AlertDialogAction>[
-            const AlertDialogAction(key: null, label: 'Aceptar'),
-          ]);
+        context: context,
+        title: 'Error',
+        message: 'Verifica que estés conectado a Internet',
+        actions: <AlertDialogAction>[
+          const AlertDialogAction(key: null, label: 'Aceptar'),
+        ],
+      );
       return;
     }
 
     Response response = Response(isSuccess: false);
 
-    response =
-        await ApiHelper.getInspecciones(widget.user.idUsuario.toString());
+    response = await ApiHelper.getInspecciones(
+      widget.user.idUsuario.toString(),
+    );
 
     setState(() {
       _showLoader = false;
@@ -96,22 +101,22 @@ class _InspeccionesListaScreenState extends State<InspeccionesListaScreen> {
 
     if (!response.isSuccess) {
       await showAlertDialog(
-          context: context,
-          title: 'Error',
-          message: response.message,
-          actions: <AlertDialogAction>[
-            const AlertDialogAction(key: null, label: 'Aceptar'),
-          ]);
+        context: context,
+        title: 'Error',
+        message: response.message,
+        actions: <AlertDialogAction>[
+          const AlertDialogAction(key: null, label: 'Aceptar'),
+        ],
+      );
       return;
     }
 
     setState(() {
       _inspecciones = response.result;
       _inspecciones.sort((a, b) {
-        return a.fecha
-            .toString()
-            .toLowerCase()
-            .compareTo(b.fecha.toString().toLowerCase());
+        return a.fecha.toString().toLowerCase().compareTo(
+          b.fecha.toString().toLowerCase(),
+        );
       });
     });
   }
@@ -125,43 +130,50 @@ class _InspeccionesListaScreenState extends State<InspeccionesListaScreen> {
 
   void _showFilter() {
     showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            title: const Text('Filtrar Inspecciones'),
-            content: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          title: const Text('Filtrar Inspecciones'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
               const Text(
                 'Escriba texto o números a buscar en Cliente o Tipo de Trabajo: ',
                 style: TextStyle(fontSize: 12),
               ),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               TextField(
                 autofocus: true,
                 decoration: InputDecoration(
-                    hintText: 'Criterio de búsqueda...',
-                    labelText: 'Buscar',
-                    suffixIcon: const Icon(Icons.search),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10))),
+                  hintText: 'Criterio de búsqueda...',
+                  labelText: 'Buscar',
+                  suffixIcon: const Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
                 onChanged: (value) {
                   _search = value;
                 },
               ),
-            ]),
-            actions: <Widget>[
-              TextButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('Cancelar')),
-              TextButton(
-                  onPressed: () => _filter(), child: const Text('Filtrar')),
             ],
-          );
-        });
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancelar'),
+            ),
+            TextButton(
+              onPressed: () => _filter(),
+              child: const Text('Filtrar'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   _filter() {
@@ -170,14 +182,12 @@ class _InspeccionesListaScreenState extends State<InspeccionesListaScreen> {
     }
     List<VistaInspeccion> filteredList = [];
     for (var inspeccion in _inspecciones) {
-      if (inspeccion.cliente
-              .toString()
-              .toLowerCase()
-              .contains(_search.toLowerCase()) ||
-          inspeccion.tipoTrabajo
-              .toString()
-              .toLowerCase()
-              .contains(_search.toLowerCase())) {
+      if (inspeccion.cliente.toString().toLowerCase().contains(
+            _search.toLowerCase(),
+          ) ||
+          inspeccion.tipoTrabajo.toString().toLowerCase().contains(
+            _search.toLowerCase(),
+          )) {
         filteredList.add(inspeccion);
       }
     }
@@ -194,9 +204,7 @@ class _InspeccionesListaScreenState extends State<InspeccionesListaScreen> {
     return Column(
       children: <Widget>[
         _showInspeccionesCount(),
-        Expanded(
-          child: _inspecciones.isEmpty ? _noContent() : _getListView(),
-        )
+        Expanded(child: _inspecciones.isEmpty ? _noContent() : _getListView()),
       ],
     );
   }
@@ -226,11 +234,13 @@ class _InspeccionesListaScreenState extends State<InspeccionesListaScreen> {
             e.empleado = e.empleado.substring(0, 25);
           }
 
-          int finempleado =
-              e.empleado.length >= largo ? largo : e.empleado.length;
+          int finempleado = e.empleado.length >= largo
+              ? largo
+              : e.empleado.length;
 
-          int fintipotrabajo =
-              e.tipoTrabajo.length >= largo ? largo : e.tipoTrabajo.length;
+          int fintipotrabajo = e.tipoTrabajo.length >= largo
+              ? largo
+              : e.tipoTrabajo.length;
 
           int finobra = e.obra.length >= largo ? largo : e.obra.length;
 
@@ -258,170 +268,184 @@ class _InspeccionesListaScreenState extends State<InspeccionesListaScreen> {
                               children: [
                                 Row(
                                   children: const [
-                                    Text("Fecha: ",
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color: Color(0xff004f95),
-                                          fontWeight: FontWeight.bold,
-                                        )),
+                                    Text(
+                                      "Fecha: ",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Color(0xff004f95),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ],
                                 ),
                                 Row(
                                   children: const [
-                                    Text("Empleado: ",
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color: Color(0xff004f95),
-                                          fontWeight: FontWeight.bold,
-                                        )),
+                                    Text(
+                                      "Empleado: ",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Color(0xff004f95),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ],
                                 ),
                                 Row(
                                   children: const [
-                                    Text("Cliente: ",
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color: Color(0xff004f95),
-                                          fontWeight: FontWeight.bold,
-                                        )),
+                                    Text(
+                                      "Cliente: ",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Color(0xff004f95),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ],
                                 ),
                                 Row(
                                   children: const [
-                                    Text("Tipo Trabajo: ",
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color: Color(0xff004f95),
-                                          fontWeight: FontWeight.bold,
-                                        )),
+                                    Text(
+                                      "Tipo Trabajo: ",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Color(0xff004f95),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ],
                                 ),
                                 Row(
                                   children: const [
-                                    Text("Obra: ",
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color: Color(0xff004f95),
-                                          fontWeight: FontWeight.bold,
-                                        )),
+                                    Text(
+                                      "Obra: ",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Color(0xff004f95),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ],
                                 ),
                                 Row(
                                   children: const [
-                                    Text("Total Preguntas: ",
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color: Color(0xff004f95),
-                                          fontWeight: FontWeight.bold,
-                                        )),
+                                    Text(
+                                      "Total Preguntas: ",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Color(0xff004f95),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ],
                                 ),
                                 Row(
                                   children: const [
-                                    Text("Respuestas NO: ",
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color: Color(0xff004f95),
-                                          fontWeight: FontWeight.bold,
-                                        )),
+                                    Text(
+                                      "Respuestas NO: ",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Color(0xff004f95),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ],
                                 ),
                                 Row(
                                   children: const [
-                                    Text("Total Puntos: ",
-                                        style: TextStyle(
-                                          fontSize: 12,
-                                          color: Color(0xff004f95),
-                                          fontWeight: FontWeight.bold,
-                                        )),
+                                    Text(
+                                      "Total Puntos: ",
+                                      style: TextStyle(
+                                        fontSize: 12,
+                                        color: Color(0xff004f95),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ],
                             ),
                             Expanded(
                               child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    Row(
-                                      children: [
-                                        Text(
-                                            DateFormat('dd/MM/yyyy').format(
-                                                DateTime.parse(e.fecha)),
-                                            style: const TextStyle(
-                                              fontSize: 12,
-                                            ))
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                            e.empleado.toString().trim() ==
-                                                    'SIN REGISTRAR'
-                                                ? e.nombreSR.toString().trim()
-                                                : e.empleado
-                                                    .toString()
-                                                    .substring(0, finempleado),
-                                            style: const TextStyle(
-                                              fontSize: 12,
-                                            )),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(e.cliente.toString(),
-                                            style: const TextStyle(
-                                              fontSize: 12,
-                                            )),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                            e.tipoTrabajo
-                                                .toString()
-                                                .substring(0, fintipotrabajo),
-                                            style: const TextStyle(
-                                              fontSize: 12,
-                                            )),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                            e.obra
-                                                .toString()
-                                                .substring(0, finobra),
-                                            style: const TextStyle(
-                                              fontSize: 12,
-                                            )),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(e.totalPreguntas.toString(),
-                                            style: const TextStyle(
-                                              fontSize: 12,
-                                            )),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(e.totalNo.toString(),
-                                            style: const TextStyle(
-                                              fontSize: 12,
-                                            )),
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(e.puntos.toString(),
-                                            style: const TextStyle(
-                                              fontSize: 12,
-                                            )),
-                                      ],
-                                    ),
-                                  ]),
-                            )
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  Row(
+                                    children: [
+                                      Text(
+                                        DateFormat(
+                                          'dd/MM/yyyy',
+                                        ).format(DateTime.parse(e.fecha)),
+                                        style: const TextStyle(fontSize: 12),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        e.empleado.toString().trim() ==
+                                                'SIN REGISTRAR'
+                                            ? e.nombreSR.toString().trim()
+                                            : e.empleado.toString().substring(
+                                                0,
+                                                finempleado,
+                                              ),
+                                        style: const TextStyle(fontSize: 12),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        e.cliente.toString(),
+                                        style: const TextStyle(fontSize: 12),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        e.tipoTrabajo.toString().substring(
+                                          0,
+                                          fintipotrabajo,
+                                        ),
+                                        style: const TextStyle(fontSize: 12),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        e.obra.toString().substring(0, finobra),
+                                        style: const TextStyle(fontSize: 12),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        e.totalPreguntas.toString(),
+                                        style: const TextStyle(fontSize: 12),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        e.totalNo.toString(),
+                                        style: const TextStyle(fontSize: 12),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        e.puntos.toString(),
+                                        style: const TextStyle(fontSize: 12),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -429,15 +453,16 @@ class _InspeccionesListaScreenState extends State<InspeccionesListaScreen> {
                     Padding(
                       padding: const EdgeInsets.only(right: 10),
                       child: IconButton(
-                          icon: const Icon(
-                            Icons.looks_two_outlined,
-                            size: 45,
-                            color: Color(0xff004f95),
-                          ),
-                          onPressed: () {
-                            _goInfoInspeccion(e);
-                          }),
-                    )
+                        icon: const Icon(
+                          Icons.looks_two_outlined,
+                          size: 45,
+                          color: Color(0xff004f95),
+                        ),
+                        onPressed: () {
+                          _goInfoInspeccion(e);
+                        },
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -450,13 +475,15 @@ class _InspeccionesListaScreenState extends State<InspeccionesListaScreen> {
 
   void _goInfoInspeccion(VistaInspeccion e) async {
     String? result = await Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => InspeccionDuplicarScreen(
-                  user: widget.user,
-                  empresa: widget.empresa,
-                  vistaInspeccion: e,
-                )));
+      context,
+      MaterialPageRoute(
+        builder: (context) => InspeccionDuplicarScreen(
+          user: widget.user,
+          empresa: widget.empresa,
+          vistaInspeccion: e,
+        ),
+      ),
+    );
     if (result == 'yes') {
       _getInspecciones();
     }
@@ -468,18 +495,22 @@ class _InspeccionesListaScreenState extends State<InspeccionesListaScreen> {
       height: 40,
       child: Row(
         children: [
-          const Text("Cantidad de Inspecciones: ",
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              )),
-          Text(_inspecciones.length.toString(),
-              style: const TextStyle(
-                fontSize: 14,
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              )),
+          const Text(
+            "Cantidad de Inspecciones: ",
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+            _inspecciones.length.toString(),
+            style: const TextStyle(
+              fontSize: 14,
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ],
       ),
     );
@@ -487,12 +518,12 @@ class _InspeccionesListaScreenState extends State<InspeccionesListaScreen> {
 
   void _addInspeccion() async {
     String? result = await Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => InspeccionesScreen(
-                  user: widget.user,
-                  empresa: widget.empresa,
-                )));
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            InspeccionesScreen(user: widget.user, empresa: widget.empresa),
+      ),
+    );
     if (result == 'yes') {
       _getInspecciones();
     }

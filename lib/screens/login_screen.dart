@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:adaptive_dialog/adaptive_dialog.dart';
-import 'package:connectivity/connectivity.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:gaosapp/widgets/widgets.dart';
 import 'package:http/http.dart' as http;
@@ -19,9 +19,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-//*****************************************************************************
-//************************** DEFINICION DE VARIABLES **************************
-//*****************************************************************************
+  //*****************************************************************************
+  //************************** DEFINICION DE VARIABLES **************************
+  //*****************************************************************************
 
   // String _email = '';
   // String _password = '';
@@ -40,30 +40,31 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _passwordShow = false;
   bool _showLoader = false;
 
-//*****************************************************************************
-//************************** INIT STATE ***************************************
-//*****************************************************************************
+  //*****************************************************************************
+  //************************** INIT STATE ***************************************
+  //*****************************************************************************
 
   @override
   void initState() {
     super.initState();
     _empresa = Empresa(
-        idEmpresa: 0,
-        nombreempresa: '',
-        direccion: '',
-        telefono: '',
-        carpetaImagenes: '',
-        mensageSSHH: '',
-        activo: false,
-        logoEmpresa: '',
-        logoFullPath: '');
+      idEmpresa: 0,
+      nombreempresa: '',
+      direccion: '',
+      telefono: '',
+      carpetaImagenes: '',
+      mensageSSHH: '',
+      activo: false,
+      logoEmpresa: '',
+      logoFullPath: '',
+    );
 
     setState(() {});
   }
 
-//*****************************************************************************
-//************************** PANTALLA *****************************************
-//*****************************************************************************
+  //*****************************************************************************
+  //************************** PANTALLA *****************************************
+  //*****************************************************************************
 
   @override
   Widget build(BuildContext context) {
@@ -73,68 +74,65 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Stack(
         children: <Widget>[
           Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 0),
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.white,
-                    Colors.white,
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(vertical: 0),
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [Colors.white, Colors.white],
+              ),
+            ),
+            child: Column(
+              children: [
+                SizedBox(height: alto * 0.1),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15),
+                  child: Image.asset("assets/kplogo.png", height: alto * 0.1),
+                ),
+                SizedBox(height: alto * 0.025),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      Constants.version,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        color: Color.fromARGB(255, 28, 131, 221),
+                      ),
+                    ),
                   ],
                 ),
-              ),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: alto * 0.1,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
-                    child: Image.asset(
-                      "assets/kplogo.png",
-                      height: alto * 0.1,
-                    ),
-                  ),
-                  SizedBox(
-                    height: alto * 0.025,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        Constants.version,
-                        style: const TextStyle(
-                            fontSize: 20,
-                            color: Color.fromARGB(255, 28, 131, 221)),
-                      ),
-                    ],
-                  ),
-                ],
-              )),
+              ],
+            ),
+          ),
           Transform.translate(
             offset: Offset(0, -alto * 0.1),
             child: Center(
               child: SingleChildScrollView(
                 child: Card(
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20)),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
                   elevation: 15,
                   margin: EdgeInsets.only(
-                      left: 20, right: 20, top: alto * 0.2, bottom: 20),
+                    left: 20,
+                    right: 20,
+                    top: alto * 0.2,
+                    bottom: 20,
+                  ),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 35, vertical: 20),
+                      horizontal: 35,
+                      vertical: 20,
+                    ),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         _showEmail(),
                         _showPassword(),
-                        const SizedBox(
-                          height: 10,
-                        ),
+                        const SizedBox(height: 10),
                         _showRememberme(),
                         _showButtons(),
                       ],
@@ -151,57 +149,52 @@ class _LoginScreenState extends State<LoginScreen> {
             child: SizedBox(
               width: 100,
               height: 100,
-              child: BackGround(
-                child: Container(),
-              ),
+              child: BackGround(child: Container()),
             ),
           ),
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const <Widget>[
-                SizedBox(
-                  height: 40,
-                ),
-              ],
+              children: const <Widget>[SizedBox(height: 40)],
             ),
           ),
           _showLoader
-              ? const LoaderComponent(
-                  text: 'Por favor espere...',
-                )
+              ? const LoaderComponent(text: 'Por favor espere...')
               : Container(),
         ],
       ),
     );
   }
 
-//-----------------------------------------------------------------
-//--------------------- METODO SHOWEMAIL --------------------------
-//-----------------------------------------------------------------
+  //-----------------------------------------------------------------
+  //--------------------- METODO SHOWEMAIL --------------------------
+  //-----------------------------------------------------------------
 
   Widget _showEmail() {
     return Container(
       padding: const EdgeInsets.all(10),
       child: Theme(
-        data: Theme.of(context).copyWith(
-          primaryColor: const Color.fromARGB(255, 24, 207, 36),
-        ),
+        data: Theme.of(
+          context,
+        ).copyWith(primaryColor: const Color.fromARGB(255, 24, 207, 36)),
         child: TextField(
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
-              fillColor: Colors.white,
-              filled: true,
-              focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: const BorderSide(
-                      width: 1, color: Color.fromARGB(255, 24, 207, 36))),
-              hintText: 'Usuario...',
-              labelText: 'Usuario',
-              errorText: _emailShowError ? _emailError : null,
-              prefixIcon: const Icon(Icons.person),
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+            fillColor: Colors.white,
+            filled: true,
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(
+                width: 1,
+                color: Color.fromARGB(255, 24, 207, 36),
+              ),
+            ),
+            hintText: 'Usuario...',
+            labelText: 'Usuario',
+            errorText: _emailShowError ? _emailError : null,
+            prefixIcon: const Icon(Icons.person),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+          ),
           onChanged: (value) {
             _email = value;
           },
@@ -210,9 +203,9 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-//-----------------------------------------------------------------
-//--------------------- METODO SHOWPASSWORD -----------------------
-//-----------------------------------------------------------------
+  //-----------------------------------------------------------------
+  //--------------------- METODO SHOWPASSWORD -----------------------
+  //-----------------------------------------------------------------
 
   Widget _showPassword() {
     return Container(
@@ -221,28 +214,31 @@ class _LoginScreenState extends State<LoginScreen> {
         obscureText: !_passwordShow,
         controller: _passwordController,
         decoration: InputDecoration(
-            fillColor: Colors.white,
-            filled: true,
-            focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: const BorderSide(
-                    width: 1, color: Color.fromARGB(255, 24, 207, 36))),
-            hintText: 'Contraseña...',
-            labelText: 'Contraseña',
-            errorText: _passwordShowError ? _passwordError : null,
-            prefixIcon: const Icon(Icons.lock),
-            suffixIcon: IconButton(
-              icon: _passwordShow
-                  ? const Icon(Icons.visibility)
-                  : const Icon(Icons.visibility_off),
-              onPressed: () {
-                setState(() {
-                  _passwordShow = !_passwordShow;
-                });
-              },
+          fillColor: Colors.white,
+          filled: true,
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10),
+            borderSide: const BorderSide(
+              width: 1,
+              color: Color.fromARGB(255, 24, 207, 36),
             ),
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+          ),
+          hintText: 'Contraseña...',
+          labelText: 'Contraseña',
+          errorText: _passwordShowError ? _passwordError : null,
+          prefixIcon: const Icon(Icons.lock),
+          suffixIcon: IconButton(
+            icon: _passwordShow
+                ? const Icon(Icons.visibility)
+                : const Icon(Icons.visibility_off),
+            onPressed: () {
+              setState(() {
+                _passwordShow = !_passwordShow;
+              });
+            },
+          ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+        ),
         onChanged: (value) {
           _password = value;
         },
@@ -250,9 +246,9 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-//-----------------------------------------------------------------
-//--------------------- METODO SHOWREMEMBERME ---------------------
-//-----------------------------------------------------------------
+  //-----------------------------------------------------------------
+  //--------------------- METODO SHOWREMEMBERME ---------------------
+  //-----------------------------------------------------------------
 
   _showRememberme() {
     return CheckboxListTile(
@@ -267,9 +263,9 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-//-----------------------------------------------------------------
-//--------------------- METODO SHOWBUTTONS ------------------------
-//-----------------------------------------------------------------
+  //-----------------------------------------------------------------
+  //--------------------- METODO SHOWBUTTONS ------------------------
+  //-----------------------------------------------------------------
 
   Widget _showButtons() {
     return Container(
@@ -283,14 +279,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
                   Icon(Icons.login),
-                  SizedBox(
-                    width: 20,
-                  ),
+                  SizedBox(width: 20),
                   Text('Iniciar Sesión'),
                 ],
               ),
               style: ElevatedButton.styleFrom(
-                primary: const Color.fromARGB(255, 24, 207, 36),
+                foregroundColor: const Color.fromARGB(255, 24, 207, 36),
                 minimumSize: const Size(double.infinity, 50),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
@@ -304,9 +298,9 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-//*****************************************************************************
-//************************** METODO LOGIN *************************************
-//*****************************************************************************
+  //*****************************************************************************
+  //************************** METODO LOGIN *************************************
+  //*****************************************************************************
 
   void _login() async {
     FocusScope.of(context).unfocus(); //Oculta el teclado
@@ -329,19 +323,17 @@ class _LoginScreenState extends State<LoginScreen> {
         _showLoader = false;
       });
       await showAlertDialog(
-          context: context,
-          title: 'Error',
-          message: 'Verifica que estes conectado a internet.',
-          actions: <AlertDialogAction>[
-            const AlertDialogAction(key: null, label: 'Aceptar'),
-          ]);
+        context: context,
+        title: 'Error',
+        message: 'Verifica que estes conectado a internet.',
+        actions: <AlertDialogAction>[
+          const AlertDialogAction(key: null, label: 'Aceptar'),
+        ],
+      );
       return;
     }
 
-    Map<String, dynamic> request = {
-      'Email': _email,
-      'password': _password,
-    };
+    Map<String, dynamic> request = {'Email': _email, 'password': _password};
 
     var url = Uri.parse('${Constants.apiUrl}/Api/Account/GetUserByEmail');
     var response = await http.post(
@@ -399,40 +391,36 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (user.contrasena == "123456") {
       await showAlertDialog(
-          context: context,
-          title: 'Error',
-          message:
-              'Es la primera vez que ingresa a la App. Deber cambiar su Contraseña,',
-          actions: <AlertDialogAction>[
-            const AlertDialogAction(key: null, label: 'Aceptar'),
-          ]);
+        context: context,
+        title: 'Error',
+        message:
+            'Es la primera vez que ingresa a la App. Deber cambiar su Contraseña,',
+        actions: <AlertDialogAction>[
+          const AlertDialogAction(key: null, label: 'Aceptar'),
+        ],
+      );
       _password = '';
       _passwordController.text = '';
       setState(() {});
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => ChangePasswordScreen(
-            user: user,
-          ),
+          builder: (context) => ChangePasswordScreen(user: user),
         ),
       );
     } else {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => HomeScreen(
-            user: user,
-            empresa: _empresa,
-          ),
+          builder: (context) => HomeScreen(user: user, empresa: _empresa),
         ),
       );
     }
   }
 
-//*****************************************************************************
-//************************** METODO VALIDATEFIELDS ****************************
-//*****************************************************************************
+  //*****************************************************************************
+  //************************** METODO VALIDATEFIELDS ****************************
+  //*****************************************************************************
 
   bool validateFields() {
     bool isValid = true;

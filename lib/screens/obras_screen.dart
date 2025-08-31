@@ -1,5 +1,5 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
-import 'package:connectivity/connectivity.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:gaosapp/components/loader_component.dart';
 import 'package:gaosapp/helpers/api_helper.dart';
@@ -11,44 +11,45 @@ class ObrasScreen extends StatefulWidget {
   final User user;
   final int opcion;
   final int cliente;
-  const ObrasScreen(
-      {Key? key,
-      required this.user,
-      required this.opcion,
-      required this.cliente})
-      : super(key: key);
+  const ObrasScreen({
+    Key? key,
+    required this.user,
+    required this.opcion,
+    required this.cliente,
+  }) : super(key: key);
 
   @override
   _ObrasScreenState createState() => _ObrasScreenState();
 }
 
 class _ObrasScreenState extends State<ObrasScreen> {
-//*****************************************************************************
-//************************** DEFINICION DE VARIABLES **************************
-//*****************************************************************************
+  //*****************************************************************************
+  //************************** DEFINICION DE VARIABLES **************************
+  //*****************************************************************************
 
   List<Obra> _obras = [];
   bool _showLoader = false;
   bool _isFiltered = false;
   String _search = '';
   Obra obraSelected = Obra(
-      nroObra: 0,
-      nombreObra: '',
-      elempep: '',
-      observaciones: '',
-      finalizada: 0,
-      supervisore: '',
-      codigoEstado: '',
-      modulo: '',
-      grupoAlmacen: '',
-      obrasDocumentos: [],
-      idCliente: 0,
-      central: '',
-      direccion: '');
+    nroObra: 0,
+    nombreObra: '',
+    elempep: '',
+    observaciones: '',
+    finalizada: 0,
+    supervisore: '',
+    codigoEstado: '',
+    modulo: '',
+    grupoAlmacen: '',
+    obrasDocumentos: [],
+    idCliente: 0,
+    central: '',
+    direccion: '',
+  );
 
-//*****************************************************************************
-//************************** INIT STATE ***************************************
-//*****************************************************************************
+  //*****************************************************************************
+  //************************** INIT STATE ***************************************
+  //*****************************************************************************
 
   @override
   void initState() {
@@ -56,9 +57,9 @@ class _ObrasScreenState extends State<ObrasScreen> {
     _getObras();
   }
 
-//*****************************************************************************
-//************************** PANTALLA *****************************************
-//*****************************************************************************
+  //*****************************************************************************
+  //************************** PANTALLA *****************************************
+  //*****************************************************************************
 
   @override
   Widget build(BuildContext context) {
@@ -67,16 +68,20 @@ class _ObrasScreenState extends State<ObrasScreen> {
       appBar: AppBar(
         title: widget.user.habilitaSSHH == 0
             ? widget.user.modulo == 'ObrasTasa'
-                ? const Text('Obras Tasa')
-                : Text('Obras ' + widget.user.modulo)
+                  ? const Text('Obras Tasa')
+                  : Text('Obras ' + widget.user.modulo)
             : const Text('Obras'),
         centerTitle: true,
         actions: <Widget>[
           _isFiltered
               ? IconButton(
-                  onPressed: _removeFilter, icon: const Icon(Icons.filter_none))
+                  onPressed: _removeFilter,
+                  icon: const Icon(Icons.filter_none),
+                )
               : IconButton(
-                  onPressed: _showFilter, icon: const Icon(Icons.filter_alt))
+                  onPressed: _showFilter,
+                  icon: const Icon(Icons.filter_alt),
+                ),
         ],
       ),
       body: Center(
@@ -87,9 +92,9 @@ class _ObrasScreenState extends State<ObrasScreen> {
     );
   }
 
-//-----------------------------------------------------------------------------
-//------------------------------ METODO FILTER --------------------------
-//-----------------------------------------------------------------------------
+  //-----------------------------------------------------------------------------
+  //------------------------------ METODO FILTER --------------------------
+  //-----------------------------------------------------------------------------
 
   _filter() {
     if (_search.isEmpty) {
@@ -100,10 +105,9 @@ class _ObrasScreenState extends State<ObrasScreen> {
       if (obra.nombreObra.toLowerCase().contains(_search.toLowerCase()) ||
           obra.elempep.toLowerCase().contains(_search.toLowerCase()) ||
           obra.modulo!.toLowerCase().contains(_search.toLowerCase()) ||
-          obra.nroObra
-              .toString()
-              .toLowerCase()
-              .contains(_search.toLowerCase())) {
+          obra.nroObra.toString().toLowerCase().contains(
+            _search.toLowerCase(),
+          )) {
         filteredList.add(obra);
       }
     }
@@ -116,9 +120,9 @@ class _ObrasScreenState extends State<ObrasScreen> {
     Navigator.of(context).pop();
   }
 
-//-----------------------------------------------------------------------------
-//------------------------------ METODO REMOVEFILTER --------------------------
-//-----------------------------------------------------------------------------
+  //-----------------------------------------------------------------------------
+  //------------------------------ METODO REMOVEFILTER --------------------------
+  //-----------------------------------------------------------------------------
 
   void _removeFilter() {
     setState(() {
@@ -127,69 +131,74 @@ class _ObrasScreenState extends State<ObrasScreen> {
     _getObras();
   }
 
-//-----------------------------------------------------------------------------
-//------------------------------ METODO SHOWFILTER --------------------------
-//-----------------------------------------------------------------------------
+  //-----------------------------------------------------------------------------
+  //------------------------------ METODO SHOWFILTER --------------------------
+  //-----------------------------------------------------------------------------
 
   void _showFilter() {
     showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            title: const Text('Filtrar Obras'),
-            content: Column(mainAxisSize: MainAxisSize.min, children: <Widget>[
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          title: const Text('Filtrar Obras'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
               const Text(
                 'Escriba texto o números a buscar en Nombre o N° de Obra o en OP/N° de Fuga o en Módulo: ',
                 style: TextStyle(fontSize: 12),
               ),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               TextField(
                 autofocus: true,
                 decoration: InputDecoration(
-                    hintText: 'Criterio de búsqueda...',
-                    labelText: 'Buscar',
-                    suffixIcon: const Icon(Icons.search),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10))),
+                  hintText: 'Criterio de búsqueda...',
+                  labelText: 'Buscar',
+                  suffixIcon: const Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
                 onChanged: (value) {
                   _search = value;
                 },
               ),
-            ]),
-            actions: <Widget>[
-              TextButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: const Text('Cancelar')),
-              TextButton(
-                  onPressed: () => _filter(), child: const Text('Filtrar')),
             ],
-          );
-        });
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancelar'),
+            ),
+            TextButton(
+              onPressed: () => _filter(),
+              child: const Text('Filtrar'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
-//-----------------------------------------------------------------------------
-//------------------------------ METODO GETCONTENT --------------------------
-//-----------------------------------------------------------------------------
+  //-----------------------------------------------------------------------------
+  //------------------------------ METODO GETCONTENT --------------------------
+  //-----------------------------------------------------------------------------
 
   Widget _getContent() {
     return Column(
       children: <Widget>[
         _showObrasCount(),
-        Expanded(
-          child: _obras.isEmpty ? _noContent() : _getListView(),
-        )
+        Expanded(child: _obras.isEmpty ? _noContent() : _getListView()),
       ],
     );
   }
 
-//-----------------------------------------------------------------------------
-//------------------------------ METODO SHOWOBRASCOUNT ------------------------
-//-----------------------------------------------------------------------------
+  //-----------------------------------------------------------------------------
+  //------------------------------ METODO SHOWOBRASCOUNT ------------------------
+  //-----------------------------------------------------------------------------
 
   Widget _showObrasCount() {
     return Container(
@@ -197,26 +206,30 @@ class _ObrasScreenState extends State<ObrasScreen> {
       height: 40,
       child: Row(
         children: [
-          const Text("Cantidad de Obras: ",
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              )),
-          Text(_obras.length.toString(),
-              style: const TextStyle(
-                fontSize: 14,
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-              )),
+          const Text(
+            "Cantidad de Obras: ",
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+            _obras.length.toString(),
+            style: const TextStyle(
+              fontSize: 14,
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ],
       ),
     );
   }
 
-//-----------------------------------------------------------------------------
-//------------------------------ METODO NOCONTENT -----------------------------
-//-----------------------------------------------------------------------------
+  //-----------------------------------------------------------------------------
+  //------------------------------ METODO NOCONTENT -----------------------------
+  //-----------------------------------------------------------------------------
 
   Widget _noContent() {
     return Container(
@@ -232,9 +245,9 @@ class _ObrasScreenState extends State<ObrasScreen> {
     );
   }
 
-//-----------------------------------------------------------------------------
-//------------------------------ METODO GETLISTVIEW ---------------------------
-//-----------------------------------------------------------------------------
+  //-----------------------------------------------------------------------------
+  //------------------------------ METODO GETLISTVIEW ---------------------------
+  //-----------------------------------------------------------------------------
 
   Widget _getListView() {
     return RefreshIndicator(
@@ -267,112 +280,122 @@ class _ObrasScreenState extends State<ObrasScreen> {
                                 children: [
                                   Row(
                                     children: [
-                                      const Text("N° Obra: ",
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            color: Color(0xff004f95),
-                                            fontWeight: FontWeight.bold,
-                                          )),
-                                      Expanded(
-                                        flex: 4,
-                                        child: Text(e.nroObra.toString(),
-                                            style: const TextStyle(
-                                              fontSize: 12,
-                                            )),
+                                      const Text(
+                                        "N° Obra: ",
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Color(0xff004f95),
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
-                                      const Text("Def. Proy.: ",
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            color: Color(0xff004f95),
-                                            fontWeight: FontWeight.bold,
-                                          )),
                                       Expanded(
                                         flex: 4,
-                                        child: Text(e.elempep,
-                                            style: const TextStyle(
-                                              fontSize: 12,
-                                            )),
+                                        child: Text(
+                                          e.nroObra.toString(),
+                                          style: const TextStyle(fontSize: 12),
+                                        ),
+                                      ),
+                                      const Text(
+                                        "Def. Proy.: ",
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Color(0xff004f95),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Expanded(
+                                        flex: 4,
+                                        child: Text(
+                                          e.elempep,
+                                          style: const TextStyle(fontSize: 12),
+                                        ),
                                       ),
                                     ],
                                   ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
+                                  const SizedBox(height: 5),
                                   Row(
                                     children: [
-                                      const Text("Nombre: ",
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            color: Color(0xff004f95),
-                                            fontWeight: FontWeight.bold,
-                                          )),
+                                      const Text(
+                                        "Nombre: ",
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Color(0xff004f95),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
                                       Expanded(
-                                        child: Text(e.nombreObra,
-                                            style: const TextStyle(
-                                              fontSize: 12,
-                                            )),
+                                        child: Text(
+                                          e.nombreObra,
+                                          style: const TextStyle(fontSize: 12),
+                                        ),
                                       ),
                                     ],
                                   ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
+                                  const SizedBox(height: 5),
                                   Row(
                                     children: [
-                                      const Text("Dirección: ",
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            color: Color(0xff004f95),
-                                            fontWeight: FontWeight.bold,
-                                          )),
+                                      const Text(
+                                        "Dirección: ",
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Color(0xff004f95),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
                                       Expanded(
                                         child: e.direccion != null
-                                            ? Text(e.direccion!,
+                                            ? Text(
+                                                e.direccion!,
                                                 style: const TextStyle(
                                                   fontSize: 12,
-                                                ))
+                                                ),
+                                              )
                                             : const Text(''),
                                       ),
                                     ],
                                   ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
+                                  const SizedBox(height: 5),
                                   Row(
                                     children: [
-                                      const Text("Supervisor: ",
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            color: Color(0xff004f95),
-                                            fontWeight: FontWeight.bold,
-                                          )),
+                                      const Text(
+                                        "Supervisor: ",
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Color(0xff004f95),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
                                       Expanded(
                                         child: e.supervisore != null
-                                            ? Text(e.supervisore!,
+                                            ? Text(
+                                                e.supervisore!,
                                                 style: const TextStyle(
                                                   fontSize: 12,
-                                                ))
+                                                ),
+                                              )
                                             : const Text(''),
                                       ),
                                     ],
                                   ),
-                                  const SizedBox(
-                                    height: 5,
-                                  ),
+                                  const SizedBox(height: 5),
                                   Row(
                                     children: [
-                                      const Text("Central: ",
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            color: Color(0xff004f95),
-                                            fontWeight: FontWeight.bold,
-                                          )),
+                                      const Text(
+                                        "Central: ",
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Color(0xff004f95),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
                                       Expanded(
                                         child: e.central != null
-                                            ? Text(e.central!,
+                                            ? Text(
+                                                e.central!,
                                                 style: const TextStyle(
                                                   fontSize: 12,
-                                                ))
+                                                ),
+                                              )
                                             : const Text(''),
                                       ),
                                       // const SizedBox(
@@ -408,9 +431,9 @@ class _ObrasScreenState extends State<ObrasScreen> {
     );
   }
 
-//*****************************************************************************
-//************************** METODO GETOBRAS **********************************
-//*****************************************************************************
+  //*****************************************************************************
+  //************************** METODO GETOBRAS **********************************
+  //*****************************************************************************
 
   Future<void> _getObras() async {
     setState(() {
@@ -424,12 +447,13 @@ class _ObrasScreenState extends State<ObrasScreen> {
         _showLoader = false;
       });
       await showAlertDialog(
-          context: context,
-          title: 'Error',
-          message: 'Verifica que estés conectado a Internet',
-          actions: <AlertDialogAction>[
-            const AlertDialogAction(key: null, label: 'Aceptar'),
-          ]);
+        context: context,
+        title: 'Error',
+        message: 'Verifica que estés conectado a Internet',
+        actions: <AlertDialogAction>[
+          const AlertDialogAction(key: null, label: 'Aceptar'),
+        ],
+      );
       return;
     }
 
@@ -450,29 +474,29 @@ class _ObrasScreenState extends State<ObrasScreen> {
 
     if (!response.isSuccess) {
       await showAlertDialog(
-          context: context,
-          title: 'Error',
-          message: response.message,
-          actions: <AlertDialogAction>[
-            const AlertDialogAction(key: null, label: 'Aceptar'),
-          ]);
+        context: context,
+        title: 'Error',
+        message: response.message,
+        actions: <AlertDialogAction>[
+          const AlertDialogAction(key: null, label: 'Aceptar'),
+        ],
+      );
       return;
     }
 
     setState(() {
       _obras = response.result;
       _obras.sort((a, b) {
-        return a.nombreObra
-            .toString()
-            .toLowerCase()
-            .compareTo(b.nombreObra.toString().toLowerCase());
+        return a.nombreObra.toString().toLowerCase().compareTo(
+          b.nombreObra.toString().toLowerCase(),
+        );
       });
     });
   }
 
-//*****************************************************************************
-//************************** METODO GOINFOOBRA ********************************
-//*****************************************************************************
+  //*****************************************************************************
+  //************************** METODO GOINFOOBRA ********************************
+  //*****************************************************************************
 
   void _goInfoObra(Obra obra) async {
     if (widget.opcion == 1) {

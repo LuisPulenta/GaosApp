@@ -1,5 +1,5 @@
 import 'package:adaptive_dialog/adaptive_dialog.dart';
-import 'package:connectivity/connectivity.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:intl/intl.dart';
@@ -14,12 +14,12 @@ class InspeccionDuplicarScreen extends StatefulWidget {
   final Empresa empresa;
   final VistaInspeccion vistaInspeccion;
 
-  const InspeccionDuplicarScreen(
-      {Key? key,
-      required this.user,
-      required this.empresa,
-      required this.vistaInspeccion})
-      : super(key: key);
+  const InspeccionDuplicarScreen({
+    Key? key,
+    required this.user,
+    required this.empresa,
+    required this.vistaInspeccion,
+  }) : super(key: key);
 
   @override
   State<InspeccionDuplicarScreen> createState() =>
@@ -27,9 +27,9 @@ class InspeccionDuplicarScreen extends StatefulWidget {
 }
 
 class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
-//*****************************************************************************
-//************************** DEFINICION DE VARIABLES **************************
-//*****************************************************************************
+  //*****************************************************************************
+  //************************** DEFINICION DE VARIABLES **************************
+  //*****************************************************************************
   bool _showLoader = false;
 
   String _codigo = '';
@@ -53,14 +53,15 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
 
   DetallesFormularioCompleto detallesFormularioCompleto =
       DetallesFormularioCompleto(
-          idcliente: 0,
-          idgrupoformulario: 0,
-          descgrupoformulario: '',
-          detallef: '',
-          descripcion: '',
-          ponderacionpuntos: 0,
-          cumple: '',
-          foto: '');
+        idcliente: 0,
+        idgrupoformulario: 0,
+        descgrupoformulario: '',
+        detallef: '',
+        descripcion: '',
+        ponderacionpuntos: 0,
+        cumple: '',
+        foto: '',
+      );
 
   String _nombreSR = '';
   final String _nombreSRError = '';
@@ -77,60 +78,64 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
   final TextEditingController _observacionesController =
       TextEditingController();
 
-  Position _positionUser = const Position(
-      longitude: 0,
-      latitude: 0,
-      timestamp: null,
-      accuracy: 0,
-      altitude: 0,
-      heading: 0,
-      speed: 0,
-      speedAccuracy: 0);
+  Position _positionUser = Position(
+    longitude: 0,
+    latitude: 0,
+    timestamp: DateTime.now(),
+    altitudeAccuracy: 0,
+    headingAccuracy: 0,
+    accuracy: 0,
+    altitude: 0,
+    heading: 0,
+    speed: 0,
+    speedAccuracy: 0,
+  );
 
-//*****************************************************************************
-//************************** INIT STATE ***************************************
-//*****************************************************************************
+  //*****************************************************************************
+  //************************** INIT STATE ***************************************
+  //*****************************************************************************
 
   @override
   void initState() {
     super.initState();
     _causante = Causante(
-        nroCausante: 0,
-        grupo: '',
-        codigo: '',
-        nombre: '',
-        apellido: '',
-        estado: false,
-        direccion: '',
-        numero: 0,
-        piso: '',
-        dpto: '',
-        torre: '',
-        ciudad: '',
-        telefono: '',
-        caracTelefono: '',
-        codpos: '',
-        encargado: '',
-        email: '',
-        fecha: '',
-        tipoprov: 0,
-        cuit: '',
-        razonSocial: '',
-        nivel: 0,
-        barrio: '',
-        fax: '',
-        caracFax: '',
-        provincia: '',
-        notasCausantes: '',
-        notas: '',
-        idEmpresa: 0,
-        dni: '');
+      nroCausante: 0,
+      grupo: '',
+      codigo: '',
+      nombre: '',
+      apellido: '',
+      estado: false,
+      direccion: '',
+      numero: 0,
+      piso: '',
+      dpto: '',
+      torre: '',
+      ciudad: '',
+      telefono: '',
+      caracTelefono: '',
+      codpos: '',
+      encargado: '',
+      email: '',
+      fecha: '',
+      tipoprov: 0,
+      cuit: '',
+      razonSocial: '',
+      nivel: 0,
+      barrio: '',
+      fax: '',
+      caracFax: '',
+      provincia: '',
+      notasCausantes: '',
+      notas: '',
+      idEmpresa: 0,
+      dni: '',
+    );
     _getPosition();
     _getInspeccion();
   }
-//*****************************************************************************
-//************************** PANTALLA *****************************************
-//*****************************************************************************
+  //*****************************************************************************
+  //************************** PANTALLA *****************************************
+  //*****************************************************************************
 
   @override
   Widget build(BuildContext context) {
@@ -144,18 +149,16 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
         children: [
           _getContent(),
           _showLoader
-              ? const LoaderComponent(
-                  text: 'Por favor espere...',
-                )
+              ? const LoaderComponent(text: 'Por favor espere...')
               : Container(),
         ],
       ),
     );
   }
 
-//-----------------------------------------------------------------------------
-//------------------------------ METODO GETCONTENT ----------------------------
-//-----------------------------------------------------------------------------
+  //-----------------------------------------------------------------------------
+  //------------------------------ METODO GETCONTENT ----------------------------
+  //-----------------------------------------------------------------------------
 
   Widget _getContent() {
     return Stack(
@@ -163,27 +166,29 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
         SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               const Padding(
                 padding: EdgeInsets.all(10.0),
                 child: Text(
-                    'Está por generar una Nueva Inspección a partir de duplicar la siguiente Inspección:',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontWeight: FontWeight.normal)),
+                  'Está por generar una Nueva Inspección a partir de duplicar la siguiente Inspección:',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
               ),
               _cardInspeccion(),
               const Padding(
                 padding: EdgeInsets.all(10.0),
                 child: Text(
-                    'Seleccione el empleado para el cual se generará la Inspección duplicada:',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontWeight: FontWeight.normal)),
+                  'Seleccione el empleado para el cual se generará la Inspección duplicada:',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 14,
+                    fontWeight: FontWeight.normal,
+                  ),
+                ),
               ),
               Row(
                 children: [
@@ -191,17 +196,11 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
                   Expanded(flex: 1, child: _showButton()),
                 ],
               ),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               _esContratista ? _showCamposContratista() : _showInfo(),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               _showObservaciones(),
-              const SizedBox(
-                height: 10,
-              ),
+              const SizedBox(height: 10),
               _showButton2(),
             ],
           ),
@@ -210,9 +209,9 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
     );
   }
 
-//-----------------------------------------------------------------
-//--------------------- METODO CARDINSPECCION ---------------------
-//-----------------------------------------------------------------
+  //-----------------------------------------------------------------
+  //--------------------- METODO CARDINSPECCION ---------------------
+  //-----------------------------------------------------------------
 
   Widget _cardInspeccion() {
     int largo = 28;
@@ -244,177 +243,189 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
                       children: [
                         Row(
                           children: const [
-                            Text("Fecha: ",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Color(0xff004f95),
-                                  fontWeight: FontWeight.bold,
-                                )),
+                            Text(
+                              "Fecha: ",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Color(0xff004f95),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ],
                         ),
                         Row(
                           children: const [
-                            Text("Empleado: ",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Color(0xff004f95),
-                                  fontWeight: FontWeight.bold,
-                                )),
+                            Text(
+                              "Empleado: ",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Color(0xff004f95),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ],
                         ),
                         Row(
                           children: const [
-                            Text("Cliente: ",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Color(0xff004f95),
-                                  fontWeight: FontWeight.bold,
-                                )),
+                            Text(
+                              "Cliente: ",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Color(0xff004f95),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ],
                         ),
                         Row(
                           children: const [
-                            Text("Tipo Trabajo: ",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Color(0xff004f95),
-                                  fontWeight: FontWeight.bold,
-                                )),
+                            Text(
+                              "Tipo Trabajo: ",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Color(0xff004f95),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ],
                         ),
                         Row(
                           children: const [
-                            Text("Obra: ",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Color(0xff004f95),
-                                  fontWeight: FontWeight.bold,
-                                )),
+                            Text(
+                              "Obra: ",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Color(0xff004f95),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ],
                         ),
                         Row(
                           children: const [
-                            Text("Total Preguntas: ",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Color(0xff004f95),
-                                  fontWeight: FontWeight.bold,
-                                )),
+                            Text(
+                              "Total Preguntas: ",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Color(0xff004f95),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ],
                         ),
                         Row(
                           children: const [
-                            Text("Respuestas NO: ",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Color(0xff004f95),
-                                  fontWeight: FontWeight.bold,
-                                )),
+                            Text(
+                              "Respuestas NO: ",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Color(0xff004f95),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ],
                         ),
                         Row(
                           children: const [
-                            Text("Total Puntos: ",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Color(0xff004f95),
-                                  fontWeight: FontWeight.bold,
-                                )),
+                            Text(
+                              "Total Puntos: ",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Color(0xff004f95),
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ],
                         ),
                       ],
                     ),
                     Expanded(
                       child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Row(
-                              children: [
-                                Text(
-                                    DateFormat('dd/MM/yyyy').format(
-                                        DateTime.parse(
-                                            widget.vistaInspeccion.fecha)),
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                    ))
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                    widget.vistaInspeccion.empleado
-                                                .toString()
-                                                .trim() ==
-                                            'SIN REGISTRAR'
-                                        ? widget.vistaInspeccion.nombreSR
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Row(
+                            children: [
+                              Text(
+                                DateFormat('dd/MM/yyyy').format(
+                                  DateTime.parse(widget.vistaInspeccion.fecha),
+                                ),
+                                style: const TextStyle(fontSize: 12),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                widget.vistaInspeccion.empleado
                                             .toString()
-                                            .trim()
-                                        : widget.vistaInspeccion.empleado
-                                            .toString()
-                                            .trim(),
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                    )),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Text(widget.vistaInspeccion.cliente.toString(),
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                    )),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                    widget.vistaInspeccion.tipoTrabajo
-                                        .toString()
-                                        .substring(0, fintipotrabajo),
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                    )),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                    widget.vistaInspeccion.obra
-                                        .toString()
-                                        .substring(1, finobra),
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                    )),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                    widget.vistaInspeccion.totalPreguntas
-                                        .toString(),
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                    )),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Text(widget.vistaInspeccion.totalNo.toString(),
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                    )),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Text(widget.vistaInspeccion.puntos.toString(),
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                    )),
-                              ],
-                            ),
-                          ]),
-                    )
+                                            .trim() ==
+                                        'SIN REGISTRAR'
+                                    ? widget.vistaInspeccion.nombreSR
+                                          .toString()
+                                          .trim()
+                                    : widget.vistaInspeccion.empleado
+                                          .toString()
+                                          .trim(),
+                                style: const TextStyle(fontSize: 12),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                widget.vistaInspeccion.cliente.toString(),
+                                style: const TextStyle(fontSize: 12),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                widget.vistaInspeccion.tipoTrabajo
+                                    .toString()
+                                    .substring(0, fintipotrabajo),
+                                style: const TextStyle(fontSize: 12),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                widget.vistaInspeccion.obra
+                                    .toString()
+                                    .substring(1, finobra),
+                                style: const TextStyle(fontSize: 12),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                widget.vistaInspeccion.totalPreguntas
+                                    .toString(),
+                                style: const TextStyle(fontSize: 12),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                widget.vistaInspeccion.totalNo.toString(),
+                                style: const TextStyle(fontSize: 12),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                widget.vistaInspeccion.puntos.toString(),
+                                style: const TextStyle(fontSize: 12),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -425,8 +436,8 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
     );
   }
   //-----------------------------------------------------------------
-//--------------------- METODO SHOWLEGAJO -------------------------
-//-----------------------------------------------------------------
+  //--------------------- METODO SHOWLEGAJO -------------------------
+  //-----------------------------------------------------------------
 
   Widget _showLegajo() {
     return Container(
@@ -456,9 +467,9 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
     );
   }
 
-//-----------------------------------------------------------------
-//--------------------- METODO SHOWBUTTON -------------------------
-//-----------------------------------------------------------------
+  //-----------------------------------------------------------------
+  //--------------------- METODO SHOWBUTTON -------------------------
+  //-----------------------------------------------------------------
 
   Widget _showButton() {
     return Container(
@@ -470,15 +481,10 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
             child: ElevatedButton(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Icon(Icons.search),
-                  SizedBox(
-                    width: 5,
-                  ),
-                ],
+                children: const [Icon(Icons.search), SizedBox(width: 5)],
               ),
               style: ElevatedButton.styleFrom(
-                primary: const Color.fromARGB(255, 24, 207, 36),
+                foregroundColor: const Color.fromARGB(255, 24, 207, 36),
                 minimumSize: const Size(double.infinity, 50),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
@@ -492,27 +498,28 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
     );
   }
   //-----------------------------------------------------------------
-//--------------------- METODO SEARCH -----------------------------
-//-----------------------------------------------------------------
+  //--------------------- METODO SEARCH -----------------------------
+  //-----------------------------------------------------------------
 
   _search() async {
     FocusScope.of(context).unfocus();
     if (_codigo.isEmpty) {
       await showAlertDialog(
-          context: context,
-          title: 'Error',
-          message: 'Ingrese un Legajo o Documento.',
-          actions: <AlertDialogAction>[
-            const AlertDialogAction(key: null, label: 'Aceptar'),
-          ]);
+        context: context,
+        title: 'Error',
+        message: 'Ingrese un Legajo o Documento.',
+        actions: <AlertDialogAction>[
+          const AlertDialogAction(key: null, label: 'Aceptar'),
+        ],
+      );
       return;
     }
     await _getCausante();
   }
 
-//-----------------------------------------------------------------
-//--------------------- METODO GETCAUSANTE ---------------------------
-//-----------------------------------------------------------------
+  //-----------------------------------------------------------------
+  //--------------------- METODO GETCAUSANTE ---------------------------
+  //-----------------------------------------------------------------
 
   Future<void> _getCausante() async {
     if (_codigo == "000000") {
@@ -536,26 +543,30 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
         _showLoader = false;
       });
       await showAlertDialog(
-          context: context,
-          title: 'Error',
-          message: 'Verifica que estes conectado a internet.',
-          actions: <AlertDialogAction>[
-            const AlertDialogAction(key: null, label: 'Aceptar'),
-          ]);
+        context: context,
+        title: 'Error',
+        message: 'Verifica que estes conectado a internet.',
+        actions: <AlertDialogAction>[
+          const AlertDialogAction(key: null, label: 'Aceptar'),
+        ],
+      );
       return;
     }
 
-    Response response =
-        await ApiHelper.getCausante(_codigo, widget.user.idEmpresa);
+    Response response = await ApiHelper.getCausante(
+      _codigo,
+      widget.user.idEmpresa,
+    );
 
     if (!response.isSuccess) {
       await showAlertDialog(
-          context: context,
-          title: 'Error',
-          message: "Legajo o Documento no válido",
-          actions: <AlertDialogAction>[
-            const AlertDialogAction(key: null, label: 'Aceptar'),
-          ]);
+        context: context,
+        title: 'Error',
+        message: "Legajo o Documento no válido",
+        actions: <AlertDialogAction>[
+          const AlertDialogAction(key: null, label: 'Aceptar'),
+        ],
+      );
 
       setState(() {
         _showLoader = false;
@@ -571,14 +582,12 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
     });
   }
 
-//-----------------------------------------------------------------
-//--------------------- METODO SHOCAMPOSCONTRATISTA ---------------
-//-----------------------------------------------------------------
+  //-----------------------------------------------------------------
+  //--------------------- METODO SHOCAMPOSCONTRATISTA ---------------
+  //-----------------------------------------------------------------
 
   Widget _showCamposContratista() {
-    return Column(
-      children: [_shownombreSR(), _showdniSR()],
-    );
+    return Column(children: [_shownombreSR(), _showdniSR()]);
   }
 
   Widget _shownombreSR() {
@@ -587,14 +596,14 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
       child: TextField(
         controller: _nombreSRController,
         decoration: InputDecoration(
-            fillColor: Colors.white,
-            filled: true,
-            hintText: 'Ingrese Nombre Contratista...',
-            labelText: 'Nombre Contratista:',
-            errorText: _nombreSRShowError ? _nombreSRError : null,
-            prefixIcon: const Icon(Icons.person),
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+          fillColor: Colors.white,
+          filled: true,
+          hintText: 'Ingrese Nombre Contratista...',
+          labelText: 'Nombre Contratista:',
+          errorText: _nombreSRShowError ? _nombreSRError : null,
+          prefixIcon: const Icon(Icons.person),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+        ),
         onChanged: (value) {
           _nombreSR = value;
           _enabled3 = _dniSR.isNotEmpty && _nombreSR.isNotEmpty;
@@ -612,14 +621,14 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
       child: TextField(
         controller: _dniSRController,
         decoration: InputDecoration(
-            fillColor: Colors.white,
-            filled: true,
-            hintText: 'Ingrese DNI Contratista...',
-            labelText: 'DNI Contratista:',
-            errorText: _dniSRShowError ? _dniSRError : null,
-            prefixIcon: const Icon(Icons.assignment_ind),
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+          fillColor: Colors.white,
+          filled: true,
+          hintText: 'Ingrese DNI Contratista...',
+          labelText: 'DNI Contratista:',
+          errorText: _dniSRShowError ? _dniSRError : null,
+          prefixIcon: const Icon(Icons.assignment_ind),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+        ),
         onChanged: (value) {
           _dniSR = value;
           _enabled3 = _dniSR.isNotEmpty && _nombreSR.isNotEmpty;
@@ -630,9 +639,9 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
     );
   }
 
-//-----------------------------------------------------------------
-//--------------------- METODO SHOWINFO ---------------------------
-//-----------------------------------------------------------------
+  //-----------------------------------------------------------------
+  //--------------------- METODO SHOWINFO ---------------------------
+  //-----------------------------------------------------------------
 
   Widget _showInfo() {
     return Card(
@@ -677,8 +686,8 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
   }
 
   //-----------------------------------------------------------------
-//--------------------- METODO SHOWBUTTON2 -------------------------
-//-----------------------------------------------------------------
+  //--------------------- METODO SHOWBUTTON2 -------------------------
+  //-----------------------------------------------------------------
 
   Widget _showButton2() {
     return Container(
@@ -692,14 +701,12 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
                   Icon(Icons.search),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Text('Generar cuestionario')
+                  SizedBox(width: 5),
+                  Text('Generar cuestionario'),
                 ],
               ),
               style: ElevatedButton.styleFrom(
-                primary: const Color.fromARGB(255, 24, 207, 36),
+                foregroundColor: const Color.fromARGB(255, 24, 207, 36),
                 minimumSize: const Size(double.infinity, 50),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(5),
@@ -714,26 +721,29 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
   }
 
   //-----------------------------------------------------------------
-//--------------------- METODO GENERARCUESTIONARIO ----------------
-//-----------------------------------------------------------------
+  //--------------------- METODO GENERARCUESTIONARIO ----------------
+  //-----------------------------------------------------------------
 
   _generarCuestionario() async {
     _detallesFormulariosCompleto = [];
 
     if (_observacionesController.text.length > 199) {
       await showAlertDialog(
-          context: context,
-          title: 'Error',
-          message:
-              'Las Observaciones tienen ${_observacionesController.text.length} caracteres. No pueden tener más de 199.',
-          actions: <AlertDialogAction>[
-            const AlertDialogAction(key: null, label: 'Aceptar'),
-          ]);
+        context: context,
+        title: 'Error',
+        message:
+            'Las Observaciones tienen ${_observacionesController.text.length} caracteres. No pueden tener más de 199.',
+        actions: <AlertDialogAction>[
+          const AlertDialogAction(key: null, label: 'Aceptar'),
+        ],
+      );
       return;
     }
 
     await _getGruposFormularios(
-        widget.vistaInspeccion.idCliente, widget.vistaInspeccion.idTipoTrabajo);
+      widget.vistaInspeccion.idCliente,
+      widget.vistaInspeccion.idTipoTrabajo,
+    );
 
     _inspeccionDetalles.forEach((element) {
       String descgpoform = '';
@@ -744,47 +754,49 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
       });
 
       detallesFormularioCompleto = DetallesFormularioCompleto(
-          idcliente: element.idCliente,
-          idgrupoformulario: element.idGrupoFormulario,
-          descgrupoformulario: descgpoform,
-          detallef: element.detalleF,
-          descripcion: element.descripcion,
-          ponderacionpuntos: element.ponderacionPuntos,
-          cumple: element.cumple,
-          foto: element.imageFullPath);
+        idcliente: element.idCliente,
+        idgrupoformulario: element.idGrupoFormulario,
+        descgrupoformulario: descgpoform,
+        detallef: element.detalleF,
+        descripcion: element.descripcion,
+        ponderacionpuntos: element.ponderacionPuntos,
+        cumple: element.cumple,
+        foto: element.imageFullPath,
+      );
       _detallesFormulariosCompleto.add(detallesFormularioCompleto);
     });
 
     FocusScope.of(context).unfocus();
     String? result = await Navigator.push(
-        context,
-        MaterialPageRoute(
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-//******************************************************************************
-
-            builder: (context) => InspeccionCuestionarioDuplicadoScreen(
-                  user: widget.user,
-                  empresa: widget.empresa,
-                  causante: _causante,
-                  observaciones: _observacionesController.text,
-                  obra: _obra,
-                  cliente: _inspeccion.idCliente,
-                  tipotrabajo: _inspeccion.idTipoTrabajo,
-                  esContratista: _esContratista,
-                  nombreSR: _nombreSRController.text,
-                  dniSR: _dniSRController.text,
-                  detallesFormulariosCompleto: _detallesFormulariosCompleto,
-                  positionUser: _positionUser,
-                )));
+      context,
+      MaterialPageRoute(
+        //******************************************************************************
+        //******************************************************************************
+        //******************************************************************************
+        //******************************************************************************
+        //******************************************************************************
+        builder: (context) => InspeccionCuestionarioDuplicadoScreen(
+          user: widget.user,
+          empresa: widget.empresa,
+          causante: _causante,
+          observaciones: _observacionesController.text,
+          obra: _obra,
+          cliente: _inspeccion.idCliente,
+          tipotrabajo: _inspeccion.idTipoTrabajo,
+          esContratista: _esContratista,
+          nombreSR: _nombreSRController.text,
+          dniSR: _dniSRController.text,
+          detallesFormulariosCompleto: _detallesFormulariosCompleto,
+          positionUser: _positionUser,
+        ),
+      ),
+    );
     if (result == 'yes') {}
   }
 
-//-----------------------------------------------------------------
-//--------------------- METODO SHOWOBSERVACIONES ------------------
-//-----------------------------------------------------------------
+  //-----------------------------------------------------------------
+  //--------------------- METODO SHOWOBSERVACIONES ------------------
+  //-----------------------------------------------------------------
 
   Widget _showObservaciones() {
     return Container(
@@ -792,23 +804,23 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
       child: TextField(
         controller: _observacionesController,
         decoration: InputDecoration(
-            fillColor: Colors.white,
-            filled: true,
-            hintText: 'Ingrese Observaciones...',
-            labelText: 'Observaciones:',
-            errorText: _observacionesShowError ? _observacionesError : null,
-            prefixIcon: const Icon(Icons.chat),
-            border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(10))),
+          fillColor: Colors.white,
+          filled: true,
+          hintText: 'Ingrese Observaciones...',
+          labelText: 'Observaciones:',
+          errorText: _observacionesShowError ? _observacionesError : null,
+          prefixIcon: const Icon(Icons.chat),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+        ),
         onChanged: (value) {},
         //enabled: _enabled,
       ),
     );
   }
 
-//*****************************************************************************
-//************************** METODO GETPOSITION *******************************
-//*****************************************************************************
+  //*****************************************************************************
+  //************************** METODO GETPOSITION *******************************
+  //*****************************************************************************
 
   Future _getPosition() async {
     LocationPermission permission;
@@ -817,34 +829,6 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
         showDialog(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                title: const Text('Aviso'),
-                content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: const <Widget>[
-                      Text('El permiso de localización está negado.'),
-                      SizedBox(
-                        height: 10,
-                      ),
-                    ]),
-                actions: <Widget>[
-                  TextButton(
-                      onPressed: () => Navigator.of(context).pop(),
-                      child: const Text('Ok')),
-                ],
-              );
-            });
-        return;
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      showDialog(
           context: context,
           builder: (context) {
             return AlertDialog(
@@ -853,21 +837,52 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
               ),
               title: const Text('Aviso'),
               content: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: const <Widget>[
-                    Text(
-                        'El permiso de localización está negado permanentemente. No se puede requerir este permiso.'),
-                    SizedBox(
-                      height: 10,
-                    ),
-                  ]),
+                mainAxisSize: MainAxisSize.min,
+                children: const <Widget>[
+                  Text('El permiso de localización está negado.'),
+                  SizedBox(height: 10),
+                ],
+              ),
               actions: <Widget>[
                 TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: const Text('Ok')),
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: const Text('Ok'),
+                ),
               ],
             );
-          });
+          },
+        );
+        return;
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            title: const Text('Aviso'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: const <Widget>[
+                Text(
+                  'El permiso de localización está negado permanentemente. No se puede requerir este permiso.',
+                ),
+                SizedBox(height: 10),
+              ],
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('Ok'),
+              ),
+            ],
+          );
+        },
+      );
       return;
     }
 
@@ -875,13 +890,14 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
 
     if (connectivityResult != ConnectivityResult.none) {
       _positionUser = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
+        desiredAccuracy: LocationAccuracy.high,
+      );
     }
   }
 
-//*****************************************************************************
-//************************** METODO GETINSPECCION *****************************
-//*****************************************************************************
+  //*****************************************************************************
+  //************************** METODO GETINSPECCION *****************************
+  //*****************************************************************************
 
   Future<void> _getInspeccion() async {
     setState(() {
@@ -895,19 +911,21 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
         _showLoader = false;
       });
       await showAlertDialog(
-          context: context,
-          title: 'Error',
-          message: 'Verifica que estés conectado a Internet',
-          actions: <AlertDialogAction>[
-            const AlertDialogAction(key: null, label: 'Aceptar'),
-          ]);
+        context: context,
+        title: 'Error',
+        message: 'Verifica que estés conectado a Internet',
+        actions: <AlertDialogAction>[
+          const AlertDialogAction(key: null, label: 'Aceptar'),
+        ],
+      );
       return;
     }
 
     Response response = Response(isSuccess: false);
 
-    response =
-        await ApiHelper.getInspeccion(widget.vistaInspeccion.idInspeccion);
+    response = await ApiHelper.getInspeccion(
+      widget.vistaInspeccion.idInspeccion,
+    );
 
     setState(() {
       _showLoader = false;
@@ -915,12 +933,13 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
 
     if (!response.isSuccess) {
       await showAlertDialog(
-          context: context,
-          title: 'Error',
-          message: response.message,
-          actions: <AlertDialogAction>[
-            const AlertDialogAction(key: null, label: 'Aceptar'),
-          ]);
+        context: context,
+        title: 'Error',
+        message: response.message,
+        actions: <AlertDialogAction>[
+          const AlertDialogAction(key: null, label: 'Aceptar'),
+        ],
+      );
       return;
     }
 
@@ -931,9 +950,9 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
     _getInspeccionDetalles();
   }
 
-//*****************************************************************************
-//************************** METODO GETINSPECCIONDETALLES *********************
-//*****************************************************************************
+  //*****************************************************************************
+  //************************** METODO GETINSPECCIONDETALLES *********************
+  //*****************************************************************************
 
   Future<void> _getInspeccionDetalles() async {
     setState(() {
@@ -947,19 +966,21 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
         _showLoader = false;
       });
       await showAlertDialog(
-          context: context,
-          title: 'Error',
-          message: 'Verifica que estés conectado a Internet',
-          actions: <AlertDialogAction>[
-            const AlertDialogAction(key: null, label: 'Aceptar'),
-          ]);
+        context: context,
+        title: 'Error',
+        message: 'Verifica que estés conectado a Internet',
+        actions: <AlertDialogAction>[
+          const AlertDialogAction(key: null, label: 'Aceptar'),
+        ],
+      );
       return;
     }
 
     Response response = Response(isSuccess: false);
 
     response = await ApiHelper.getDetallesInspecciones(
-        widget.vistaInspeccion.idInspeccion);
+      widget.vistaInspeccion.idInspeccion,
+    );
 
     setState(() {
       _showLoader = false;
@@ -967,12 +988,13 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
 
     if (!response.isSuccess) {
       await showAlertDialog(
-          context: context,
-          title: 'Error',
-          message: response.message,
-          actions: <AlertDialogAction>[
-            const AlertDialogAction(key: null, label: 'Aceptar'),
-          ]);
+        context: context,
+        title: 'Error',
+        message: response.message,
+        actions: <AlertDialogAction>[
+          const AlertDialogAction(key: null, label: 'Aceptar'),
+        ],
+      );
       return;
     }
 
@@ -983,9 +1005,9 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
     _getObra();
   }
 
-//*****************************************************************************
-//************************** METODO GETOBRA *****************************
-//*****************************************************************************
+  //*****************************************************************************
+  //************************** METODO GETOBRA *****************************
+  //*****************************************************************************
 
   Future<void> _getObra() async {
     setState(() {
@@ -999,12 +1021,13 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
         _showLoader = false;
       });
       await showAlertDialog(
-          context: context,
-          title: 'Error',
-          message: 'Verifica que estés conectado a Internet',
-          actions: <AlertDialogAction>[
-            const AlertDialogAction(key: null, label: 'Aceptar'),
-          ]);
+        context: context,
+        title: 'Error',
+        message: 'Verifica que estés conectado a Internet',
+        actions: <AlertDialogAction>[
+          const AlertDialogAction(key: null, label: 'Aceptar'),
+        ],
+      );
       return;
     }
 
@@ -1018,12 +1041,13 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
 
     if (!response.isSuccess) {
       await showAlertDialog(
-          context: context,
-          title: 'Error',
-          message: response.message,
-          actions: <AlertDialogAction>[
-            const AlertDialogAction(key: null, label: 'Aceptar'),
-          ]);
+        context: context,
+        title: 'Error',
+        message: response.message,
+        actions: <AlertDialogAction>[
+          const AlertDialogAction(key: null, label: 'Aceptar'),
+        ],
+      );
       return;
     }
 
@@ -1032,21 +1056,22 @@ class _InspeccionDuplicarScreenState extends State<InspeccionDuplicarScreen> {
     });
   }
 
-//*****************************************************************************
-//************************** METODO GETGRUPOSFORMULARIOS **********************
-//*****************************************************************************
+  //*****************************************************************************
+  //************************** METODO GETGRUPOSFORMULARIOS **********************
+  //*****************************************************************************
 
   Future<void> _getGruposFormularios(int cliente, int tipotrabajo) async {
     var connectivityResult = await Connectivity().checkConnectivity();
 
     if (connectivityResult == ConnectivityResult.none) {
       await showAlertDialog(
-          context: context,
-          title: 'Error',
-          message: 'Verifica que estés conectado a Internet',
-          actions: <AlertDialogAction>[
-            const AlertDialogAction(key: null, label: 'Aceptar'),
-          ]);
+        context: context,
+        title: 'Error',
+        message: 'Verifica que estés conectado a Internet',
+        actions: <AlertDialogAction>[
+          const AlertDialogAction(key: null, label: 'Aceptar'),
+        ],
+      );
       return;
     }
 
